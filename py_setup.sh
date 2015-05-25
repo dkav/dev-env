@@ -1,7 +1,7 @@
 # Setup Python development environment #
 
 # Setup Python virtual environment
-brew install pyenv pyenv-virtualenv
+brew install pyenv pyenv-virtualenv pyenv-pip-migrate
 
 # Install Python 2.7
 pyenv install 2.7.9
