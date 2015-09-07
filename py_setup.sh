@@ -1,6 +1,6 @@
 # Summary: Setup Python development environment
 #
-# Usage: py_setup <Python version> [<Python version>]"
+# Usage: py_setup <Python version> [<Python version>]
 #
 
 if [ -z "$1" ]; then
