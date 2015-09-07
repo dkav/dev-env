@@ -1,9 +1,19 @@
-# Set Ruby development environment #
+# Summary: Setup Ruby virtual environment
+#
+# Usage: rb_setup <Ruby version>
+#
 
-# Setup Ruby virtual environment
-brew install rbenv rbenv-gemset ruby-build
+ruby_version=$1
 
-# Install Ruby
-rbenv install 2.2.0
-rbenv rehash
+if [ -z "$ruby_version" ]; then
+    echo "Usage: rb_setup <Ruby version>"
+else
+    # Setup Ruby virtual environment
+    brew install rbenv rbenv-gemset ruby-build
 
+    # Install Ruby
+    . ~/.bash_profile
+    rbdev
+    rbenv install $ruby_version
+    rbenv rehash
+fi
