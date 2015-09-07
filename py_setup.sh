@@ -1,16 +1,21 @@
-# Setup Python development environment #
+# Summary: Setup Python development environment
+#
+# Usage: py_setup <Python version> [<Python version>]"
+#
 
-# Setup Python virtual environment
-brew install pyenv pyenv-virtualenv pyenv-pip-migrate
+if [ -z "$1" ]; then
+    echo "Usage: py_setup <Python version> [<Python version>]"
+else
+    # Setup Python virtual environment
+    brew install pyenv pyenv-virtualenv pyenv-pip-migrate
 
-# Install Python 2.7
-pyenv install 2.7.9
-pyenv rehash
+    # Install Python
+    . ~/.bash_profile
+    pydev
 
-# Install Python 3.x
-pyenv install 3.4.3
-pyenv rehash
-pyenv shell 3.4.3
-pip install --upgrade setuptools
-pyenv system
-
+    for py_version in "$@"
+    do
+        pyenv install $py_version
+    done
+    pyenv rehash
+fi
