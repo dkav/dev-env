@@ -8,7 +8,7 @@ py_version=$1  # Python version to use
 if [ -z "$py_version" ]; then
     echo "Usage: py_ipython <Python version>"
 else
-   y. ~/.bash_profile
+   . ~/.bash_profile
     pydev
 
     pyenv virtualenv $py_version ipython
@@ -16,7 +16,8 @@ else
 
     pyenv shell ipython
 
-    pip install "ipython[notebook]"
+    pip install jupyter
+    brew install freetype
     pip install matplotlib
     pip install rpy2 # R needs to be installed
 
