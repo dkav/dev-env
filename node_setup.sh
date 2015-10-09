@@ -11,5 +11,4 @@ cp $(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
 # Install stable release and make it the default
 . ~/.bash_profile
 nodev
-nmv install stable
-nvm alias default stable
+nvm install stable
