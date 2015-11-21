@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Setup Python development environment
 #
 # Usage: py_setup <Python version> [<Python version>]

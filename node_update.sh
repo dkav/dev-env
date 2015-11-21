@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Removes older Node release and installs latest stable version
 #
 # Usage: node_update

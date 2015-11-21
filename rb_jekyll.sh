@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Install Jekyll
 #
 # Usage: rb_jekyll <Ruby version>

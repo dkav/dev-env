@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Installs Node Topojson package in global folder
 #
 #

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Update Ruby virtual environment
 #
 # Usage: rb_update <Ruby version to install> [<Ruby version to remove>]

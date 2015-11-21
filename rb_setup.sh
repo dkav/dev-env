@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Setup Ruby virtual environment
 #
 # Usage: rb_setup <Ruby version>

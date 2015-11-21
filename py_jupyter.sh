@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Setup iPython virutal environment
 #
 # Usage: py_ipython <Python version>

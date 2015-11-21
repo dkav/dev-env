@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Script to install Homebrew and relevant packages #
 
 # Install Homebrew

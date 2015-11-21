@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Summary: Update all Python packages
 #
 # Usage: py_pkgup <Python version>
