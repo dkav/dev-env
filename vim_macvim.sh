@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Allow easy calling of MacVim from command line
 cp mvim /usr/local/bin/
 ln -s /usr/local/bin/mvim /usr/local/bin/mvimdiff

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Vim Customizations #
 #====================#
 # Goto dotfiles folder
