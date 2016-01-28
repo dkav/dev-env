@@ -10,10 +10,6 @@ ruby_version=$1
 if [ -z "$ruby_version" ]; then
     echo "Usage: rb_setup <Ruby version>"
 else
-    # Setup Ruby virtual environment
-    brew install ruby-build 
-    brew install rbenv rbenv-gemset --HEAD
-    
     # Install Ruby
     . ~/.bash_profile
     rbdev

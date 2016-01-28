@@ -8,9 +8,6 @@
 if [ -z "$1" ]; then
     echo "Usage: py_setup <Python version> [<Python version>]"
 else
-    # Setup Python virtual environment
-    brew install pyenv pyenv-virtualenv pyenv-pip-migrate
-
     # Install Python
     . ~/.bash_profile
     pydev
