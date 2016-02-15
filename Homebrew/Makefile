@@ -7,7 +7,7 @@ all: exiftool wget git hg python ruby node
 
 $(HBREW):
 	@ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	@sudo ln -s "$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/share/zsh/site-functions/_brew
+	@ln -s "$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
 	@echo "brew"
 brew: $(HBREW)
 
@@ -38,8 +38,8 @@ endif
 
 ruby: brew
 ifeq (, $(shell brew list --versions ruby-build))
-	@brew install ruby-build
-	@brew install rbenv rbenv-gemset --HEAD
+	@brew install rbenv ruby-build rbenv-default-gems
+	echo 'bundler' >> "$(brew --prefix rbenv)/default-gems"
 endif
 
 node: brew
