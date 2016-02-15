@@ -13,15 +13,18 @@ else
    . ~/.bash_profile
     pydev
 
-    pyenv virtualenv $py_version ipython
-    pyenv rehash
+    if pyenv virtualenv $py_version ipython; then
+        pyenv rehash
 
-    pyenv shell ipython
+        pyenv shell ipython
 
-    pip install jupyter
-    brew install freetype
-    pip install matplotlib
-    pip install rpy2 # R needs to be installed
+        pip install jupyter
+        brew install freetype
+        pip install matplotlib
+        pip install rpy2 # R needs to be installed
 
-    pyenv shell system
+        pyenv shell system
+    else
+        exit 1
+    fi
 fi
