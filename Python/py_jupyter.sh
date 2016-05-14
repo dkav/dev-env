@@ -18,6 +18,7 @@ else
 
         pyenv shell jupyter
 
+        pip install --upgrade pip
         pip install jupyter
         brew install freetype
         pip install matplotlib

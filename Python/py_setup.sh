@@ -15,6 +15,8 @@ else
     for py_version in "$@"
     do
         pyenv install $py_version
+        pyenv rehash
+        pyenv shell $py_version
+        pip install --upgrade pip
     done
-    pyenv rehash
 fi
