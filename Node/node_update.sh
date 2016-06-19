@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # Summary: Removes older Node release and installs latest stable version
 #
@@ -6,10 +6,9 @@
 #
 
 # Activate Node Version Manager
-. ~/.bash_profile
 nodev
 
 # Install latest release
 nvm deactivate
 nvm uninstall default
-nvm install stable
+nvm install node

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -l
 #
 # Source - https://gist.github.com/othiym23/4ac31155da23962afd0e
 
@@ -12,7 +12,6 @@ set -e
 set -x
 
 # Activate Node Version Manager
-. ~/.bash_profile
 nodev
 
 for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)

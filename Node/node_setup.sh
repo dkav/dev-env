@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -l
 
 # Summary: Setup Node development environment#
 #
@@ -6,6 +6,5 @@
 #
 
 # Install stable release and make it the default
-. ~/.bash_profile
 nodev
-nvm install stable
+nvm install node
