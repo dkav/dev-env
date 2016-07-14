@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash -l
 #
 # Source - https://gist.github.com/othiym23/4ac31155da23962afd0e
 
@@ -7,9 +7,6 @@
 #
 # Usage: npm_update.sh
 #
-
-set -e
-set -x
 
 # Activate Node Version Manager
 nodev
