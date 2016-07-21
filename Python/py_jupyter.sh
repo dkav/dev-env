@@ -10,9 +10,11 @@ py_version=$1  # Python version to use
 if [ -z "$py_version" ]; then
     echo "Usage: py_jupyter <Python version>"
 else
-   . ~/.bash_profile
+    # Setup pyenv environment
+    . ~/.bash_profile
     pydev
 
+    # Setup jupyter
     if pyenv virtualenv $py_version jupyter; then
         pyenv rehash
 

@@ -8,10 +8,11 @@
 if [ -z "$1" ]; then
     echo "Usage: py_setup <Python version> [<Python version>]"
 else
-    # Install Python
+    # Setup pyenv environment
     . ~/.bash_profile
     pydev
 
+    # Install Python
     for py_version in "$@"
     do
         pyenv install $py_version
