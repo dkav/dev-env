@@ -2,15 +2,16 @@
 
 # Summary: Setup Ruby virtual environment
 #
-# Usage: rb_update <Ruby version to install> [<Ruby version to remove>]
+# Usage: rb_setup <Ruby version to install> [<Ruby version to remove>]
 #
 
 rb_new=$1
 rb_old=$2
 
 if [ -z "$rb_new" ]; then
-    echo "Usage: rb_update <Ruby version to install> [<Ruby version to remove>]"
+    echo "Usage: rb_setup <Ruby version to install> [<Ruby version to remove>]"
 else
+    # Setup rbenv environment
     . ~/.bash_profile
     rbdev
 
