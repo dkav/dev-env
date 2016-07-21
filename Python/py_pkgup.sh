@@ -14,8 +14,13 @@ else
     . ~/.bash_profile
     pydev
 
-    # Update packages
-    pyenv shell $py_version
-    pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
-    pyenv shell system
+    # Check if version exits
+    if pyenv versions --bare | grep -q -x $py_version; then
+        # Update packages
+        pyenv shell $py_version
+        pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
+        pyenv shell system
+    else
+        echo "Version $py_version is not installed"
+    fi
 fi
