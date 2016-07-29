@@ -20,14 +20,12 @@ else
 
         pyenv shell jupyter
 
-        pip install --upgrade pip
+        pip install --upgrade setuptools pip
         pip install jupyter
         brew install freetype
         pip install matplotlib
         pip install pandas
         pip install rpy2 # R needs to be installed
-
-        pyenv shell system
     else
         exit 1
     fi

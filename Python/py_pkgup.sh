@@ -19,7 +19,6 @@ else
         # Update packages
         pyenv shell $py_version
         pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
-        pyenv shell system
     else
         echo "Version $py_version is not installed"
     fi

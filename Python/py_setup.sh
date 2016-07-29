@@ -18,6 +18,6 @@ else
         pyenv install $py_version
         pyenv rehash
         pyenv shell $py_version
-        pip install --upgrade pip
+        pip install --upgrade setuptools pip
     done
 fi
