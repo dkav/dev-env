@@ -12,13 +12,13 @@ if [ -z "$rb_new" ]; then
     echo "Usage: rb_setup <Ruby version to install> [<Ruby version to remove>]"
 else
     # Setup rbenv environment
-    . ~/.dev/dev-rb
+    . ~/.dev/dev_rb
 
     # Install new Ruby version
-    rbenv install $ruby_new
+    rbenv install $rb_new
     if [ $? -eq 0 ]; then
         rbenv rehash
-        rbenv shell $ruby_new
+        rbenv shell $rb_new
         gem install bundler
 
         # Optional removal of old Ruby version
