@@ -16,13 +16,15 @@ else
 
     # Install new Ruby version
     rbenv install $ruby_new
-    rbenv rehash
-    rbenv shell $ruby_new
-    gem install bundler
+    if [ $? -eq 0 ]; then
+        rbenv rehash
+        rbenv shell $ruby_new
+        gem install bundler
 
-    # Optional removal of old Ruby version
-    if [ ! -z "$rb_old" ]; then
-        rbenv uninstall $rb_old
+        # Optional removal of old Ruby version
+        if [ ! -z "$rb_old" ]; then
+            rbenv uninstall $rb_old
+        fi
+        rbenv rehash
     fi
-    rbenv rehash
 fi

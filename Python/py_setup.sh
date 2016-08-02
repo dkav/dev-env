@@ -11,13 +11,14 @@ else
     # Setup pyenv environment
     . ~/.dev/dev_py
 
-
     # Install Python
     for py_version in "$@"
     do
         pyenv install $py_version
-        pyenv rehash
-        pyenv shell $py_version
-        pip install --upgrade setuptools pip
+         if [ $? -eq 0 ]; then
+            pyenv rehash
+            pyenv shell $py_version
+            pip install --upgrade setuptools pip
+        fi
     done
 fi
