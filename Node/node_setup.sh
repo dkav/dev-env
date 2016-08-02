@@ -6,8 +6,7 @@
 #
 
 # Initialize Node Version Manager
-. ~/.bash_profile
-nodev
+. ~/.dev/dev_no
 
 # Install stable release and make it the default
 nvm install node

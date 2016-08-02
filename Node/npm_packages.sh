@@ -7,8 +7,7 @@
 #
 
 # Initialize Node Version Manager
-. ~/.bash_profile
-nodev
+. ~/.dev/dev_no
 
 # Install global packages
 npm install --global http-server topojson

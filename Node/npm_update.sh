@@ -10,8 +10,7 @@
 #
 
 # Initialize Node Version Manager
-. ~/.bash_profile
-nodev
+. ~/.dev/dev_no
 
 for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
 do

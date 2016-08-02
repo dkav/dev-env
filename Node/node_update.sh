@@ -6,8 +6,7 @@
 #
 
 # Initialize Node Version Manager
-. ~/.bash_profile
-nodev
+. ~/.dev/dev_no
 
 # Install latest release
 cnode="$(nvm version node)"

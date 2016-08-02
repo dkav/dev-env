@@ -11,8 +11,7 @@ if [ -z "$py_version" ]; then
     echo "py_pkgup <Python version>"
 else
     # Setup pyenv environment
-    . ~/.bash_profile
-    pydev
+    . ~/.dev/dev_py
 
     # Check if version exits
     if pyenv versions --bare | grep -q -x $py_version; then

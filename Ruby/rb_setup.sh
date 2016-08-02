@@ -12,8 +12,7 @@ if [ -z "$rb_new" ]; then
     echo "Usage: rb_setup <Ruby version to install> [<Ruby version to remove>]"
 else
     # Setup rbenv environment
-    . ~/.bash_profile
-    rbdev
+    . ~/.dev/dev-rb
 
     # Install new Ruby version
     rbenv install $ruby_new
