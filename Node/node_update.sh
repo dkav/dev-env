@@ -1,11 +1,12 @@
-#!/bin/bash -l
+#!/bin/bash
 
 # Summary: Removes older Node release and installs latest stable version
 #
 # Usage: node_update
 #
 
-# Activate Node Version Manager
+# Initialize Node Version Manager
+. ~/.bash_profile
 nodev
 
 # Install latest release

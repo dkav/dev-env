@@ -1,6 +1,7 @@
-#!/bin/bash -l
+#!/bin/bash
 #
-# Source - https://gist.github.com/othiym23/4ac31155da23962afd0e
+# Original source - 
+# https://gist.github.com/othiym23/4ac31155da23962afd0e
 
 # Summary: Updates outdated global packages
 #
@@ -8,7 +9,8 @@
 # Usage: npm_update.sh
 #
 
-# Activate Node Version Manager
+# Initialize Node Version Manager
+. ~/.bash_profile
 nodev
 
 for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
