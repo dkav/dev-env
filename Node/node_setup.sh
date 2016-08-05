@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Summary: Setup Node development environment#
+# Summary: Setup Node development environment
 #
 # Usage: node_setup
 #
