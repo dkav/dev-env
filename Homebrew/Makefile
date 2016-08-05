@@ -3,7 +3,7 @@
 HBREW = /usr/local/bin/brew
 HBAPPS = $(shell brew list --versions)
 
-all: exiftool wget git hg python ruby node
+all:  bash-completion wget exiftool git hg python ruby node
 
 $(HBREW):
 	@ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -11,14 +11,19 @@ $(HBREW):
 	@echo "brew"
 brew: $(HBREW)
 
-exiftool: brew
-ifeq (, $(shell brew list --versions exiftool))
-	@brew install exiftool
+bash-completion: brew
+ifeq (, $(shell brew list --versions bash-completion))
+	@brew install bash-completion
 endif
 
 wget: brew
 ifeq (, $(shell brew list --versions wget))
 	@brew install wget
+endif
+
+exiftool: brew
+ifeq (, $(shell brew list --versions exiftool))
+	@brew install exiftool
 endif
 
 git: brew
