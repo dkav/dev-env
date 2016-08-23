@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Original source - 
+# Original source -
 # https://gist.github.com/othiym23/4ac31155da23962afd0e
 
 # Summary: Updates outdated global packages
