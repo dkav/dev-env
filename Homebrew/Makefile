@@ -28,7 +28,7 @@ endif
 
 git: brew
 ifeq (, $(shell brew list --versions git))
-	@brew install git
+	@brew install git gist
 endif
 
 python: brew
