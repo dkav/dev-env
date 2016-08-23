@@ -3,7 +3,7 @@
 HBREW = /usr/local/bin/brew
 HBAPPS = $(shell brew list --versions)
 
-all:  bash-completion wget exiftool git hg python ruby node
+all:  bash-completion wget exiftool git ruby node
 
 $(HBREW):
 	@ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -29,11 +29,6 @@ endif
 git: brew
 ifeq (, $(shell brew list --versions git))
 	@brew install git
-endif
-
-hg: brew
-ifeq (, $(shell brew list --versions mercurial))
-	@brew install mercurial
 endif
 
 python: brew
