@@ -1,50 +1,60 @@
 # Makefile to install Homebrew and Homebrew packages
 
-HBREW = /usr/local/bin/brew
-HBAPPS = $(shell brew list --versions)
+define binstall
+	@if [[ "$$(brew list --versions $@)" ]]; then \
+		echo "$@ already installed"; \
+	else \
+		brew install $@; \
+	fi
+endef
 
-all:  bash-completion wget exiftool git ruby node
+all:  bash-completion wget exiftool git python ruby node
 
-$(HBREW):
-	@ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	@ln -s "$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
-	@echo "brew"
-brew: $(HBREW)
-
-bash-completion: brew
-ifeq (, $(shell brew list --versions bash-completion))
-	@brew install bash-completion
+hbrew:
+ifeq ($(shell which brew),)
+	@echo "Installing Homebrew"
+	@ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	@ln -fs "$$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
 endif
 
-wget: brew
-ifeq (, $(shell brew list --versions wget))
-	@brew install wget
-endif
+bash-completion: hbrew
+	$(binstall)
 
-exiftool: brew
-ifeq (, $(shell brew list --versions exiftool))
-	@brew install exiftool
-endif
+wget: hbrew
+	$(binstall)
 
-git: brew
-ifeq (, $(shell brew list --versions git))
-	@brew install git gist
-endif
+exiftool: hbrew
+	$(binstall)
 
-python: brew
-ifeq (, $(shell brew list --versions pyenv))
-	@brew install pyenv pyenv-virtualenv pyenv-pip-migrate
-endif
+git: hbrew
+	$(binstall)
 
-ruby: brew
-ifeq (, $(shell brew list --versions ruby-build))
-	@brew install rbenv ruby-build rbenv-default-gems
-	echo 'bundler' >> "$(brew --prefix rbenv)/default-gems"
-endif
+pyenv: hbrew
+	$(binstall)
 
-node: brew
-ifeq (, $(shell brew list --versions nvm))
-	@brew install nvm
+pyenv-virtualenv: hbrew
+	$(binstall)
+
+pyenv-pip-migrate: hbrew
+	$(binstall)
+
+python: pyenv pyenv-virtualenv pyenv-pip-migrate
+
+rbenv: hbrew
+	$(binstall)
+
+ruby-build: hbrew
+	$(binstall)
+
+rbenv-default-gems: hbrew
+	$(binstall)
+
+ruby: rbenv ruby-build rbenv-default-gems
+	@echo 'bundler' >> "$$(brew --prefix rbenv)/default-gems"
+
+nvm: hbrew
+	$(binstall)
+
+node: nvm
 	@mkdir /usr/local/var/nvm
-	@cp $(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
-endif
+	@cp $$(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
