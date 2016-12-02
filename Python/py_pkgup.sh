@@ -17,7 +17,8 @@ else
     if pyenv versions --bare | grep -q -x $py_version; then
         # Update packages
         pyenv shell $py_version
-        pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
+        pip list --outdated --format=columns | tail -n +3 \
+            | cut -d ' ' -f 1 | xargs -n 1 pip install -U
     else
         echo "Version $py_version is not installed"
     fi
