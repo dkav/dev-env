@@ -19,6 +19,7 @@ else
             pyenv rehash
             pyenv shell $py_version
             pip install --upgrade setuptools pip
+            pip install flake8 pylint
         fi
     done
 fi
