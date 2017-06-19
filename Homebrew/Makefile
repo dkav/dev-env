@@ -8,7 +8,7 @@ define binstall
 	fi
 endef
 
-all:  bash-completion wget exiftool gpg git python ruby node
+all:  bash-completion wget exiftool gpg git ctags python ruby node
 
 hbrew:
 ifeq ($(shell which brew),)
@@ -30,6 +30,9 @@ gpg: hbrew
 	$(binstall)
 
 git: hbrew
+	$(binstall)
+
+ctags: ctags
 	$(binstall)
 
 pyenv: hbrew
