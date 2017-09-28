@@ -8,7 +8,7 @@ define binstall
 	fi
 endef
 
-all:  bash-completion wget exiftool gpg git ctags python ruby node
+all:  bash-completion wget rsync exiftool gpg git ctags python ruby node
 
 hbrew:
 ifeq ($(shell which brew),)
@@ -21,6 +21,9 @@ bash-completion: hbrew
 	$(binstall)
 
 wget: hbrew
+	$(binstall)
+
+rsync: hbrew
 	$(binstall)
 
 exiftool: hbrew
