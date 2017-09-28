@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # Install powerline font for vim-airline plugin
+
 fdir=~/Library/Fonts/
-font="Sauce Code Powerline Regular.otf"
-url=https://github.com/powerline/fonts/raw/master/SourceCodePro/Sauce%20Code%20Powerline%20Regular.otf
+font="Source Code Pro for Powerline.otf"
+url=https://github.com/powerline/fonts/raw/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf
 
 cd $fdir && { curl -L -o "$font" $url ; cd -; }
