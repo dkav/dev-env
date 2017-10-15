@@ -14,7 +14,10 @@ else
     # Install Python
     for py_version in "$@"
     do
+        CFLAGS="-I$(brew --prefix openssl)/include" \
+        LDFLAGS="-L$(brew --prefix openssl)/lib" \
         pyenv install $py_version
+
          if [ $? -eq 0 ]; then
             pyenv rehash
             pyenv shell $py_version
