@@ -22,7 +22,7 @@ else
             pyenv rehash
             pyenv shell $py_version
             pip install --upgrade setuptools pip
-            pip install flake8 flake8_docstrings pylint
+            pip install flake8 flake8_docstrings pylint vulture
         fi
     done
 fi
