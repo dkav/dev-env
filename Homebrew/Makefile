@@ -8,7 +8,7 @@ define binstall
 	fi
 endef
 
-all:  bash-completion wget rsync exiftool git ctags gnupg python ruby node
+all:  bash-completion wget rsync exiftool git ctags graphviz gnupg python ruby node
 
 # Install Homebrew if it is not installed
 hbrew:
@@ -37,6 +37,9 @@ git: hbrew
 	$(binstall)
 
 ctags: hbrew
+	$(binstall)
+
+graphviz: hbrew
 	$(binstall)
 
 
