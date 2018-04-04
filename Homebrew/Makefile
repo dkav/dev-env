@@ -43,7 +43,7 @@ gnupg: gpg gpg-agent pinentry-mac
 git: hbrew
 	$(binstall)
 
-ctags: ctags
+ctags: hbrew
 	$(binstall)
 
 pyenv: hbrew
