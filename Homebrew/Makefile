@@ -8,14 +8,18 @@ define binstall
 	fi
 endef
 
-all:  bash-completion wget rsync exiftool gnupg git ctags python ruby node
+all:  bash-completion wget rsync exiftool git ctags gnupg python ruby node
 
+# Install Homebrew if it is not installed
 hbrew:
 ifeq ($(shell which brew),)
 	@echo "Installing Homebrew"
 	@ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 	@ln -fs "$$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
 endif
+
+# Homebrew Packages
+# =================
 
 bash-completion: hbrew
 	$(binstall)
@@ -29,6 +33,14 @@ rsync: hbrew
 exiftool: hbrew
 	$(binstall)
 
+git: hbrew
+	$(binstall)
+
+ctags: hbrew
+	$(binstall)
+
+
+# GnuPG
 gpg: hbrew
 	$(binstall)
 
@@ -40,12 +52,8 @@ pinentry-mac: hbrew
 
 gnupg: gpg gpg-agent pinentry-mac
 
-git: hbrew
-	$(binstall)
 
-ctags: hbrew
-	$(binstall)
-
+# Python
 pyenv: hbrew
 	$(binstall)
 
@@ -57,6 +65,8 @@ pyenv-pip-migrate: hbrew
 
 python: pyenv pyenv-virtualenv pyenv-pip-migrate
 
+
+# Ruby
 rbenv: hbrew
 	$(binstall)
 
@@ -69,6 +79,8 @@ rbenv-default-gems: hbrew
 ruby: rbenv ruby-build rbenv-default-gems
 	@echo 'bundler' >> "$$(brew --prefix rbenv)/default-gems"
 
+
+# Node
 nvm: hbrew
 	$(binstall)
 
