@@ -73,5 +73,5 @@ nvm: hbrew
 	$(binstall)
 
 node: nvm
-	@mkdir /usr/local/var/nvm
+	@mkdir -p /usr/local/var/nvm
 	@cp $$(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
