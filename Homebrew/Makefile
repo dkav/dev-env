@@ -1,5 +1,6 @@
 # Makefile to install Homebrew and Homebrew packages
 
+# Install via Hombrew
 define binstall
 	@if [[ "$$(brew list --versions $@)" ]]; then \
 		echo "$@ already installed"; \
@@ -8,15 +9,19 @@ define binstall
 	fi
 endef
 
-all:  bash-completion wget rsync exiftool git ctags graphviz gnupg python ruby node
+
+all:  bash-completion wget rsync exiftool graphviz gnupg dev \
+    python ruby node
+
 
 # Install Homebrew if it is not installed
 hbrew:
-ifeq ($(shell which brew),)
-	@echo "Installing Homebrew"
-	@ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	@ln -fs "$$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
-endif
+    ifeq ($(shell which brew),)
+	    @echo "Installing Homebrew"
+	    @ruby -e "$$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	    @ln -fs "$$(brew --prefix)/Library/Contributions/brew_zsh_completion.zsh" /usr/local/share/zsh/site-functions/_brew
+    endif
+
 
 # Homebrew Packages
 # =================
@@ -31,12 +36,6 @@ rsync: hbrew
 	$(binstall)
 
 exiftool: hbrew
-	$(binstall)
-
-git: hbrew
-	$(binstall)
-
-ctags: hbrew
 	$(binstall)
 
 graphviz: hbrew
@@ -54,6 +53,19 @@ pinentry-mac: hbrew
 	$(binstall)
 
 gnupg: gpg gpg-agent pinentry-mac
+
+
+# Development
+git: hbrew
+	$(binstall)
+
+hub: hbrew
+	$(binstall)
+
+ctags: hbrew
+	$(binstall)
+
+dev: git hub ctags
 
 
 # Python
