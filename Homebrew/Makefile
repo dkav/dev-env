@@ -25,6 +25,9 @@ hbrew:
 
 # Homebrew Packages
 # =================
+cask-repair: hbrew
+	@brew tap vitorgalvao/tiny-scripts
+	$(binstall)
 
 bash-completion: hbrew
 	$(binstall)
