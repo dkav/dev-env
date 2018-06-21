@@ -62,13 +62,19 @@ gnupg: gpg gpg-agent pinentry-mac
 git: hbrew
 	$(binstall)
 
+bfg: hbrew
+	$(binstall)
+
 hub: hbrew
 	$(binstall)
 
 ctags: hbrew
 	$(binstall)
 
-dev: git hub ctags
+dos2unix: hbrew
+	$(binstall)
+
+dev: git bfg hub ctags dos2unix
 
 
 # Python
