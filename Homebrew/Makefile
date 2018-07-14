@@ -10,8 +10,8 @@ define binstall
 endef
 
 
-all:  bash-completion wget rsync exiftool graphviz gnupg dev \
-    python ruby node
+all:  brew-tools bash-completion wget rsync exiftool graphviz \
+    gnupg dev python ruby node
 
 
 # Install Homebrew if it is not installed
@@ -25,10 +25,20 @@ hbrew:
 
 # Homebrew Packages
 # =================
+
+# Brew Tools
+brew-graph: hbrew
+	@brew tap martido/brew-graph
+	$(binstall)
+
 cask-repair: hbrew
 	@brew tap vitorgalvao/tiny-scripts
 	$(binstall)
 
+brew-tools: brew-graph cask-repair
+
+
+# Base Tools
 bash-completion: hbrew
 	$(binstall)
 
