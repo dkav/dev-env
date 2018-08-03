@@ -11,7 +11,7 @@ endef
 
 
 all:  brew-tools bash-completion wget rsync exiftool graphviz \
-    gnupg dev python ruby node r
+    gnupg dev python ruby node r gdal
 
 
 # Install Homebrew if it is not installed
@@ -126,3 +126,17 @@ node: nvm
 # R
 r: hbrew
 	$(call binstall,--with-openblas)
+
+
+# GDAL
+osgeo: hbrew
+	@brew tap osgeo/osgeo4mac
+
+gdal2: osgeo
+	$(binstall)
+	@brew link -f gdal2
+
+gdal2-pdf: gdal2
+	$(binstall)
+
+gdal: gdal2-pdf
