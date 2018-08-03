@@ -5,13 +5,13 @@ define binstall
 	@if [[ "$$(brew list --versions $@)" ]]; then \
 		echo "$@ already installed"; \
 	else \
-		brew install $@; \
+		brew install $@ $(1); \
 	fi
 endef
 
 
 all:  brew-tools bash-completion wget rsync exiftool graphviz \
-    gnupg dev python ruby node
+    gnupg dev python ruby node r
 
 
 # Install Homebrew if it is not installed
@@ -121,3 +121,8 @@ nvm: hbrew
 node: nvm
 	@mkdir -p /usr/local/var/nvm
 	@cp $$(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
+
+
+# R
+r: hbrew
+	$(call binstall,--with-openblas)
