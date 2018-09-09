@@ -78,13 +78,16 @@ bfg: hbrew
 hub: hbrew
 	$(binstall)
 
+git-sizer: hbrew
+	$(binstall)
+
 ctags: hbrew
 	$(binstall)
 
 dos2unix: hbrew
 	$(binstall)
 
-dev: git bfg hub ctags dos2unix
+dev: git bfg hub git-sizer ctags dos2unix
 
 
 # Python
