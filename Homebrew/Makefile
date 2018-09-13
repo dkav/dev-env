@@ -91,6 +91,9 @@ dev: git bfg hub git-sizer ctags dos2unix
 
 
 # Python
+python2: hbrew
+	$(binstall)
+
 pyenv: hbrew
 	$(binstall)
 
@@ -100,7 +103,7 @@ pyenv-virtualenv: hbrew
 pyenv-pip-migrate: hbrew
 	$(binstall)
 
-python: pyenv pyenv-virtualenv pyenv-pip-migrate
+python: python2 pyenv pyenv-virtualenv pyenv-pip-migrate
 
 
 # Ruby
