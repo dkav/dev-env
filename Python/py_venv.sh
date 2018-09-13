@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Summary: Setup Python development environment
+# Summary:  Install Python virtual environment
 #
 # Usage: py_setup <Python version> [<Python version>]
 #
@@ -22,7 +22,6 @@ else
             pyenv rehash
             pyenv shell $py_version
             pip install --upgrade setuptools pip
-            pip install flake8 flake8_docstrings pep8-naming pylint vulture
         fi
     done
 fi
