@@ -59,13 +59,10 @@ graphviz: hbrew
 gpg: hbrew
 	$(binstall)
 
-gpg-agent: hbrew
-	$(binstall)
-
 pinentry-mac: hbrew
 	$(binstall)
 
-gnupg: gpg gpg-agent pinentry-mac
+gnupg: gpg pinentry-mac
 
 
 # Development
