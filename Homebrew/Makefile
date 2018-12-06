@@ -78,8 +78,9 @@ hub: hbrew
 git-sizer: hbrew
 	$(binstall)
 
-ctags: hbrew
-	$(binstall)
+universal-ctags: hbrew
+	@brew tap universal-ctags/universal-ctags
+	$(binstall) --HEAD
 
 dos2unix: hbrew
 	$(binstall)
