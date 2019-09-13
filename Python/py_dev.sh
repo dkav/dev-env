@@ -2,11 +2,8 @@
 
 # Summary: Install base packages for Python development
 
-# Package tools
-pip install pipdeptree
-
-# Shell tools
-pip install ipython
+#  Environment tools
+pip3 install pipdeptree graphviz pipenv ipython
 
 # Linting tools
-pip install flake8 flake8_docstrings pep8-naming pylint vulture
+pip3 install flake8 flake8_docstrings pep8-naming pylint vulture black

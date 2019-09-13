@@ -11,7 +11,7 @@ endef
 
 
 all:  brew-tools bash-completion wget rsync exiftool graphviz \
-    gnupg dev python ruby node r gdal
+    gnupg python ruby node r gdal
 
 
 # Install Homebrew if it is not installed
@@ -89,45 +89,22 @@ dev: git bfg hub git-sizer ctags dos2unix
 
 
 # Python
-python2: hbrew
+python: hbrew
 	$(binstall)
-
-python3: hbrew
-	$(binstall)
-
-pyenv: hbrew
-	$(binstall)
-
-pyenv-virtualenv: hbrew
-	$(binstall)
-
-pyenv-pip-migrate: hbrew
-	$(binstall)
-
-python: python2 python3 pyenv pyenv-virtualenv pyenv-pip-migrate
+	@../Python/py_dev.sh
+	@../Python/py_jupyter.sh
 
 
 # Ruby
-rbenv: hbrew
+ruby: hbrew	
 	$(binstall)
-
-ruby-build: hbrew
-	$(binstall)
-
-rbenv-default-gems: hbrew
-	$(binstall)
-
-ruby: rbenv ruby-build rbenv-default-gems
-	@echo 'bundler' >> "$$(brew --prefix rbenv)/default-gems"
+	@gem install -f bundler
 
 
 # Node
-nvm: hbrew
+node: hbrew
 	$(binstall)
-
-node: nvm
-	@mkdir -p /usr/local/var/nvm
-	@cp $$(brew --prefix nvm)/nvm-exec /usr/local/var/nvm/
+	@../Node/npm_packages.sh
 
 
 # R
