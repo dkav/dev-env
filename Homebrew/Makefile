@@ -41,6 +41,9 @@ brew-tools: brew-graph cask-repair
 bash-completion: hbrew
 	$(binstall)
 
+tmux: hbrew
+	$(binstall)
+
 wget: hbrew
 	$(binstall)
 
@@ -53,7 +56,7 @@ exiftool: hbrew
 graphviz: hbrew
 	$(binstall)
 
-base-tools: bash-completion wget rsync exiftool graphviz
+base-tools: bash-completion tmux wget rsync exiftool graphviz
 
 
 # Security
