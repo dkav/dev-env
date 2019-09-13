@@ -10,8 +10,7 @@ define binstall
 endef
 
 
-all:  brew-tools bash-completion wget rsync exiftool graphviz \
-    gnupg python ruby node r gdal
+all:  brew-tools base-tools security dev-tools dev-langs spatial
 
 
 # Install Homebrew if it is not installed
@@ -54,8 +53,10 @@ exiftool: hbrew
 graphviz: hbrew
 	$(binstall)
 
+base-tools: bash-completion wget rsync exiftool graphviz
 
-# GnuPG
+
+# Security
 gpg: hbrew
 	$(binstall)
 
@@ -64,8 +65,10 @@ pinentry-mac: hbrew
 
 gnupg: gpg pinentry-mac
 
+security: gnupg
 
-# Development
+
+# Development Tools
 git: hbrew
 	$(binstall)
 
@@ -85,34 +88,30 @@ universal-ctags: hbrew
 dos2unix: hbrew
 	$(binstall)
 
-dev: git bfg hub git-sizer ctags dos2unix
+dev-tools: git bfg hub git-sizer ctags dos2unix
 
 
-# Python
+# Development Lanaguages
 python: hbrew
 	$(binstall)
 	@../Python/py_dev.sh
 	@../Python/py_jupyter.sh
 
-
-# Ruby
-ruby: hbrew	
+ruby: hbrew
 	$(binstall)
 	@gem install -f bundler
 
-
-# Node
 node: hbrew
 	$(binstall)
 	@../Node/npm_packages.sh
 
-
-# R
 r: hbrew
 	$(call binstall,--with-openblas)
 
+dev-langs: python ruby node r
 
-# GDAL
+
+# Spatial tools
 osgeo: hbrew
 	@brew tap osgeo/osgeo4mac
 
@@ -123,4 +122,4 @@ gdal2: osgeo
 gdal2-pdf: gdal2
 	$(binstall)
 
-gdal: gdal2-pdf
+spatial: osgeo gdal2 gdal2-pdf
