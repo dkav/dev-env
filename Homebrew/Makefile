@@ -102,7 +102,7 @@ python: hbrew
 
 ruby: hbrew
 	$(binstall)
-	@gem install -f bundler
+	@../Ruby/rb_dev.sh
 
 node: hbrew
 	$(binstall)
