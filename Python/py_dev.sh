@@ -6,4 +6,4 @@
 pip3 install pipdeptree graphviz pipenv ipython
 
 # Linting tools
-pip3 install flake8 flake8_docstrings pep8-naming pylint vulture black
+pip3 install flake8 flake8_docstrings pep8-naming pylint vulture black pyls
