@@ -4,4 +4,4 @@
 
 gem update --system
 gem install bundler github-pages
-gem clean
+gem cleanup
