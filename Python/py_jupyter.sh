@@ -2,7 +2,6 @@
 
 # Summary: Setup Jupyter environment
 #
-# Usage: py_jupyter
 
 pip3 install jupyter
 brew install freetype
