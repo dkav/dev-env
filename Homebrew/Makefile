@@ -118,11 +118,11 @@ dev-langs: python ruby node r
 osgeo: hbrew
 	@brew tap osgeo/osgeo4mac
 
-gdal2: osgeo
+osgeo-gdal: osgeo
 	$(binstall)
 	@brew link -f gdal2
 
-gdal2-pdf: gdal2
+osgeo-gdal-pdf: osgeo-gdal
 	$(binstall)
 
-spatial: osgeo gdal2 gdal2-pdf
+spatial: osgeo osgeo-gdal osgeo-gdal-pdf
