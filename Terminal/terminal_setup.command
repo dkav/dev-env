@@ -1,7 +1,4 @@
-#!/bin/bash
-
-# Set ZSH as default shell
-chsh -s /bin/zsh
+#!/bin/zsh
 
 # Install powerline font for vim-airline plugin
 fdir=~/Library/Fonts/

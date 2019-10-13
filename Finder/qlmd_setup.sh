@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Download release from https://github.com/toland/qlmarkdown/releases
 qldir="~/Library/Quicklook"

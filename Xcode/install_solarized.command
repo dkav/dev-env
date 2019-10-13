@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Install Solarized Dark Theme for Xcode  #
 #=========================================#

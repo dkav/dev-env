@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Summary: Setup shell completetion for Docker
 #
@@ -7,10 +7,10 @@
 dockerdir="/Applications/Docker.app/Contents/Resources/etc"
 
 # Bash completions
-cd /usr/local/etc/bash_completion.d
-ln -sf $dockerdir/docker.bash-completion
-ln -sf $dockerdir/docker-machine.bash-completion
-ln -sf $dockerdir/docker-compose.bash-completion
+cd /usr/local/etc/zsh_completion.d
+ln -sf $dockerdir/docker.zsh-completion
+ln -sf $dockerdir/docker-machine.zsh-completion
+ln -sf $dockerdir/docker-compose.zsh-completion
 
 # Zsh completions
 cd /usr/local/share/zsh/site-functions
