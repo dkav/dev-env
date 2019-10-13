@@ -27,8 +27,7 @@ hbrew:
 
 # Brew Tools
 brew-graph: hbrew
-	@brew tap martido/brew-graph
-	$(binstall)
+	@brew tap martido/homebrew-graph
 
 cask-repair: hbrew
 	@brew tap vitorgalvao/tiny-scripts
