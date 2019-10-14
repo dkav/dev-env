@@ -10,7 +10,7 @@ define binstall
 endef
 
 
-all:  brew-tools base-tools security dev-tools dev-langs spatial
+all:  brew-tools base-tools security dev-tools dev-langs
 
 
 # Install Homebrew if it is not installed
