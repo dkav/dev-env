@@ -26,7 +26,7 @@ hbrew:
 # =================
 
 # Brew Tools
-brew-graph: hbrew
+brew-graph: hbrew graphviz
 	@brew tap martido/homebrew-graph
 
 cask-repair: hbrew
