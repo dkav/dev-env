@@ -4,4 +4,4 @@
 #
 
 # Install global packages
-npm install --global http-server topojson
+npm install --global http-server topojson-client topojson-server topojson-simplify
