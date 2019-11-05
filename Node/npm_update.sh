@@ -6,7 +6,9 @@
 # Summary: Updates outdated global packages
 #
 
-for package in $(npm -g outdated --parseable --depth=0 | cut -d: -f2)
+npm --global outdated
+echo
+for package in $(npm --global outdated --parseable --depth=0 | cut -d: -f2)
 do
-    npm install -g "$package"
+    npm install --global --no-progress --silent "$package"
 done
