@@ -80,6 +80,9 @@ hub: hbrew
 git-sizer: hbrew
 	$(binstall)
 
+tcl-tk: hbrew
+	$(binstall)
+
 universal-ctags: hbrew
 	@brew tap universal-ctags/universal-ctags
 	$(binstall) --HEAD
@@ -87,7 +90,7 @@ universal-ctags: hbrew
 dos2unix: hbrew
 	$(binstall)
 
-dev-tools: git bfg hub git-sizer ctags dos2unix
+dev-tools: git bfg hub git-sizer tcl-tk ctags dos2unix
 
 
 # Development Lanaguages
