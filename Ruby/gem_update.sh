@@ -1,7 +1,8 @@
 #!/bin/zsh
 
 # Summary: Update base packages for Ruby development
-gem update --system --silent
+
+gem update --system --quiet 1>/dev/null
 gem outdated | egrep "bundler|github-pages" \
-	&& gem update --silent bundler github-pages
-gem cleanup --silent
+	&& gem update --quiet bundler github-pages 1>/dev/null
+gem cleanup --quiet 1>/dev/null
