@@ -1,7 +1,6 @@
 #!/bin/zsh
 
 # Summary: Update all outdated Python packages
-#
 
 pip3 list --outdated \
             | tee "$(tty)" \
