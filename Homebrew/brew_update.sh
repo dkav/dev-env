@@ -4,13 +4,19 @@
 
 brew update 1>/dev/null
 
-echo "Updating packages"
-brew outdated
-brew upgrade 1>/dev/null
+bo=$(brew outdated)
+if [[ -n $bo ]]; then
+    echo "Updating packages"
+    echo $bo
+    brew upgrade 1>/dev/null
+fi
 
-echo "Updating cask packages"
-brew cask outdated
-brew cask upgrade 1>/dev/null
+bko=$(brew cask outdated)
+if [[ -n $kbo ]]; then
+    echo "Updating cask packages"
+    echo $bko
+    brew cask upgrade 1>/dev/null
+fi
 
 echo "Cleaning up"
 brew cleanup 1>/dev/null
