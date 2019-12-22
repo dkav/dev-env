@@ -4,14 +4,14 @@
 
 brew update 1>/dev/null
 
-bo=$(brew outdated)
+bo=$(brew outdated --verbose)
 if [[ -n $bo ]]; then
     echo "Updating packages"
     echo $bo
     brew upgrade 1>/dev/null
 fi
 
-bko=$(brew cask outdated)
+bko=$(brew cask outdated --verbose)
 if [[ -n $bko ]]; then
     echo "Updating cask packages"
     echo $bko
