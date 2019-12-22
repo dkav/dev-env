@@ -12,7 +12,7 @@ if [[ -n $bo ]]; then
 fi
 
 bko=$(brew cask outdated)
-if [[ -n $kbo ]]; then
+if [[ -n $bko ]]; then
     echo "Updating cask packages"
     echo $bko
     brew cask upgrade 1>/dev/null
