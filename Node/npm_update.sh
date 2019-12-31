@@ -5,9 +5,13 @@
 #
 # Summary: Updates outdated global packages
 
-npm --global outdated --depth=0
-for package in $(npm --global outdated --parseable --depth=0 | cut -d: -f4)
-do
-    echo
-    npm install --global --no-progress --quiet $package 1>/dev/null
-done
+if [ -x "$(command -v npm)" ]; then
+    npm --global outdated --depth=0
+    for package in $(npm --global outdated --parseable --depth=0 | cut -d: -f4)
+    do
+        echo
+        npm install --global --no-progress --quiet $package 1>/dev/null
+    done
+else
+    echo "Error: Node is not installed" >&2
+fi
