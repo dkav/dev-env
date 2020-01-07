@@ -18,5 +18,9 @@ if [[ -n $bko ]]; then
     brew cask upgrade 1>/dev/null
 fi
 
-echo "Cleaning up"
-brew cleanup 1>/dev/null
+if [[ -n $bo || -n $bko ]]; then
+    echo "Cleaning up"
+    brew cleanup 1>/dev/null
+else
+    echo "No packages to update"
+fi
