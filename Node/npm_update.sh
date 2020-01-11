@@ -6,7 +6,7 @@
 # Summary: Updates outdated global packages
 
 if [ -x "$(command -v npm)" ]; then
-    no=$(npm --global outdated --parseable --depth=0 | cut -d: -f2,4)
+    no=($(npm --global outdated --parseable --depth=0 | cut -d: -f3,4))
     if [[ -n $no ]]; then
         for package in $no; do
             npkg="$(cut -d: -f2 <<<"$package")"
