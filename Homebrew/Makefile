@@ -26,14 +26,14 @@ hbrew:
 # =================
 
 # Brew Tools
-brew-graph: hbrew graphviz
-	@brew tap martido/homebrew-graph
-
 cask-repair: hbrew
 	@brew tap vitorgalvao/tiny-scripts
 	$(binstall)
 
-brew-tools: brew-graph cask-repair
+brew-graph: hbrew graphviz
+	@brew tap martido/homebrew-graph
+
+brew-tools: cask-repair brew-graph
 
 
 # Base Tools
