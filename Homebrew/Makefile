@@ -74,13 +74,13 @@ security: gnupg
 git: hbrew
 	$(binstall)
 
-bfg: hbrew
-	$(binstall)
-
 hub: hbrew
 	$(binstall)
 
 git-sizer: hbrew
+	$(binstall)
+
+bfg: hbrew
 	$(binstall)
 
 tcl-tk: hbrew
@@ -93,7 +93,7 @@ universal-ctags: hbrew
 dos2unix: hbrew
 	$(binstall)
 
-dev-tools: git bfg hub git-sizer tcl-tk ctags dos2unix
+dev-tools: git hub git-sizer bfg tcl-tk ctags dos2unix
 
 
 # Development Lanaguages
