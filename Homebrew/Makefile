@@ -93,7 +93,7 @@ universal-ctags: hbrew
 dos2unix: hbrew
 	$(binstall)
 
-dev-tools: git hub git-sizer bfg tcl-tk ctags dos2unix
+dev-tools: git hub git-sizer bfg tcl-tk universal-ctags dos2unix
 
 
 # Development Lanaguages
