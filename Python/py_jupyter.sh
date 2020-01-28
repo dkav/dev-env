@@ -3,7 +3,7 @@
 # Summary: Setup Jupyter environment
 #
 
-pip3 install jupyter
+pip3 install jupyterlab
 brew install freetype
 pip3 install matplotlib
 pip3 install pandas
