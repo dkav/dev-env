@@ -83,6 +83,9 @@ git-sizer: hbrew
 bfg: hbrew
 	$(binstall)
 
+git-gui: tcl-tk
+	$(binstall)
+
 tcl-tk: hbrew
 	$(binstall)
 
@@ -93,7 +96,7 @@ universal-ctags: hbrew
 dos2unix: hbrew
 	$(binstall)
 
-dev-tools: git hub git-sizer bfg tcl-tk universal-ctags dos2unix
+dev-tools: git hub git-sizer bfg git-gui tcl-tk universal-ctags dos2unix
 
 
 # Development Lanaguages
