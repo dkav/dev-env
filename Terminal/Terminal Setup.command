@@ -6,3 +6,5 @@ font="Source Code Pro for Powerline.otf"
 url=https://github.com/powerline/fonts/raw/master/SourceCodePro/Source%20Code%20Pro%20for%20Powerline.otf
 
 cd $fdir && { curl -L -o "$font" $url ; cd -; }
+
+read -s -k '?Press any key to continue...'
