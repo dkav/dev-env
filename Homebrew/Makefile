@@ -102,16 +102,16 @@ dev-tools: git hub git-sizer bfg git-gui tcl-tk universal-ctags dos2unix
 # Development Lanaguages
 python: hbrew
 	$(binstall)
-	@../Python/py_dev.sh
-	@../Python/py_jupyter.sh
+	@../Python/py-dev.sh
+	@../Python/py-jupyter.sh
 
 ruby: hbrew
 	$(binstall)
-	@../Ruby/rb_dev.sh
+	@../Ruby/rb-dev.sh
 
 node: hbrew
 	$(binstall)
-	@../Node/npm_packages.sh
+	@../Node/npm-packages.sh
 
 r: hbrew
 	$(call binstall,--with-openblas)
