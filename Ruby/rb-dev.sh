@@ -1,6 +1,6 @@
 #!/bin/zsh
-
-# Summary: Install base packages for Ruby development
+#
+# Install base packages for Ruby development.
 
 gem update --system
 gem install bundler github-pages

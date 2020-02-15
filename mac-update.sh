@@ -1,6 +1,6 @@
 #!/bin/zsh
 #
-# Update macOS environment
+# Update macOS environment.
 
 denv_dir=${"$(readlink $0)":a:h}
 

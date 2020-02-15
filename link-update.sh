@@ -1,4 +1,6 @@
 #!/bin/zsh
+#
+# Add symbolic link to mac-update script in /usr/local/bin.
 
 source_dir=${0:a:h}
 

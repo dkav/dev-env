@@ -1,7 +1,7 @@
 #!/bin/zsh
+#
+# Install Solarized Dark Theme for Xcode.
 
-# Install Solarized Dark Theme for Xcode  #
-#=========================================#
 echo "Installing Solarized Theme"
 
 destdir=~/Library/Developer/Xcode/UserData/FontAndColorThemes/

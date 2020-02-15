@@ -1,7 +1,6 @@
 #!/bin/zsh
-
-# Summary: Setup Jupyter environment
 #
+# Setup Jupyter environment.
 
 pip3 install jupyterlab
 brew install freetype

@@ -1,5 +1,6 @@
 #!/bin/zsh
-# List of Vim plugins
+#
+# List of Vim plugins.
 
 plugins=(airline airline_themes flattened nerdtree tagbar gutentags fugitive \
 	gitgutter ale nerdcommenter ctrlp)

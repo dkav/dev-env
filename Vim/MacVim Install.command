@@ -1,4 +1,5 @@
 #!/bin/zsh
+# Brew install MacVim.
 
 brew cask install macvim
 

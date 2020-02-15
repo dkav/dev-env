@@ -1,4 +1,6 @@
 #!/bin/zsh
+#
+# Brew install Java.
 
 brew cask install java
 

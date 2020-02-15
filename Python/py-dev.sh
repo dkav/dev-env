@@ -1,6 +1,6 @@
 #!/bin/zsh
-
-# Summary: Install base packages for Python development
+#
+# Install base packages for Python development.
 
 #  Environment tools
 pip3 install pipdeptree graphviz pipenv ipython

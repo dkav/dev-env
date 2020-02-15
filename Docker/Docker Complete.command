@@ -1,8 +1,6 @@
 #!/bin/zsh
-
-# Summary: Setup shell completetion for Docker
 #
-# Usage: docker_complete
+# Setup shell completetion for Docker.
 
 docker_dir="/Applications/Docker.app/Contents/Resources/etc"
 
