@@ -12,5 +12,5 @@ if [ -x "$(command -v /usr/local/opt/ruby/bin/gem)" ]; then
     echo "No bundler or github-pages updates"
   fi
 else
-  "Error: Ruby is not installed" >&2
+  echo "Error: Ruby is not installed" >&2
 fi
