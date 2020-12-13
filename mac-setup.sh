@@ -6,7 +6,7 @@ denv_dir=${"$(readlink $0)":a:h}
 
 # Homebrew
 echo "Setup Homebrew..."
-make -f "$denv_dir/Homebrew/Makefile"
+"$denv_dir/Homebrew/brew-install.sh"
 
 # Vim
 echo "\nSetup Vim ..."
