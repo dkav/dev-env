@@ -4,7 +4,7 @@
 
 if [ -x "$(command -v /usr/local/opt/ruby/bin/gem)" ]; then
   gem update --system --quiet 1>/dev/null
-  if ( gem outdated | egrep "bundler|github-pages" ); then
+  if ( gem outdated | egrep "bundler |github-pages " ); then
     gem update --quiet bundler github-pages 1>/dev/null
     echo "Cleaning up"
     gem cleanup --quiet 1>/dev/null
