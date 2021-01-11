@@ -2,24 +2,40 @@
 #
 # Update macOS environment.
 
+if [ "$#" -eq 0 ]; then
+  in_args=( brew vim python ruby node )
+else
+  in_args=( "$@" )
+fi
+
 denv_dir=${"$(readlink $0)":a:h}
 
 # Homebrew
-echo "Updating Homebrew..."
-"$denv_dir/Homebrew/brew-update.sh"
+if (($in_args[(Ie)brew])); then
+  echo "Updating Homebrew..."
+  "$denv_dir/Homebrew/brew-update.sh"
+fi
 
 # Vim
-echo "\nUpdating Vim Plugins..."
-"$denv_dir/vim/vim-update.sh"
+if (($in_args[(Ie)vim])); then
+  echo "\nUpdating Vim Plugins..."
+  "$denv_dir/vim/vim-update.sh"
+fi
 
 # Python
-echo "\nUpdating Python Packages..."
-"$denv_dir/Python/pip-update.sh"
+if (($in_args[(Ie)python])); then
+  echo "\nUpdating Python Packages..."
+  "$denv_dir/Python/pip-update.sh"
+fi
 
 # Ruby
-echo "\nUpdating Ruby Gems..."
-"$denv_dir/Ruby/gem-update.sh"
+if (($in_args[(Ie)ruby])); then
+  echo "\nUpdating Ruby Gems..."
+  "$denv_dir/Ruby/gem-update.sh"
+fi
 
 # Node
-echo "\nUpdating Node Packages..."
-"$denv_dir/Node/npm-update.sh"
+if (($in_args[(Ie)node])); then
+  echo "\nUpdating Node Packages..."
+  "$denv_dir/Node/npm-update.sh"
+fi
