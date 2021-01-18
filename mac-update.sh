@@ -8,7 +8,7 @@ else
   in_args=( "$@" )
 fi
 
-denv_dir=${"$(readlink $0)":a:h}
+denv_dir=${0:A:h}
 
 # Homebrew
 if (($in_args[(Ie)brew])); then
@@ -25,17 +25,17 @@ fi
 # Python
 if (($in_args[(Ie)python])); then
   echo "\nUpdating Python Packages..."
-  "$denv_dir/Python/pip-update.sh"
+  "$denv_dir/Python/py-update.sh"
 fi
 
 # Ruby
 if (($in_args[(Ie)ruby])); then
   echo "\nUpdating Ruby Gems..."
-  "$denv_dir/Ruby/gem-update.sh"
+  "$denv_dir/Ruby/rb-update.sh"
 fi
 
 # Node
 if (($in_args[(Ie)node])); then
   echo "\nUpdating Node Packages..."
-  "$denv_dir/Node/npm-update.sh"
+  "$denv_dir/Node/node-update.sh"
 fi

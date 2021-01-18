@@ -2,26 +2,41 @@
 #
 # Setup macOS environment.
 
-denv_dir=${"$(readlink $0)":a:h}
+if [ "$#" -eq 0 ]; then
+  in_args=( brew vim python ruby node )
+else
+  in_args=( "$@" )
+fi
+
+denv_dir=${0:A:h}
 
 # Homebrew
-echo "Setup Homebrew..."
-"$denv_dir/Homebrew/brew-install.sh"
+if (($in_args[(Ie)brew])); then
+  echo "Setup Homebrew..."
+  "$denv_dir/Homebrew/brew-install.sh"
+fi
 
 # Vim
-echo "\nSetup Vim ..."
-"$denv_dir/vim/vim-setup.sh"
-"$denv_dir/vim/MacVim Install.command"
+if (($in_args[(Ie)vim])); then
+  echo "\nSetup Vim ..."
+  "$denv_dir/vim/vim-setup.sh"
+  "$denv_dir/vim/MacVim Install.command"
+fi
 
 # Python
-echo "\nSetup Python Packages..."
-"$denv_dir/Python/py-dev.sh"
-"$denv_dir/Python/py-jupyter.sh"
+if (($in_args[(Ie)python])); then
+  echo "\nSetup Python Packages..."
+  "$denv_dir/Python/py-packages.sh"
+fi
 
 # Ruby
-echo "\nSetup Ruby Gems..."
-"$denv_dir/Ruby/rb-dev.sh"
+if (($in_args[(Ie)ruby])); then
+  echo "\nSetup Ruby Gems..."
+  "$denv_dir/Ruby/rb-packages.sh"
+fi
 
 # Node
-echo "\nSetup Node Packages..."
-"$denv_dir/Node/npm-packages.sh"
+if (($in_args[(Ie)node])); then
+  echo "\nSetup Node Packages..."
+  "$denv_dir/Node/node-packages.sh"
+fi

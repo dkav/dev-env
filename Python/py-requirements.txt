@@ -1,0 +1,22 @@
+# Base packages for Python development.
+
+# Environment tools
+pipdeptree
+graphviz
+pipenv
+ipython
+
+# Linting tools
+flake8
+flake8_docstrings
+pep8-naming
+pylint
+vulture
+black
+pyls
+
+# Jupyter
+jupyterlab
+matplotlib
+pandas
+rpy2

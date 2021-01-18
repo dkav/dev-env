@@ -2,14 +2,14 @@
 #
 # Update all outdated Python packages.
 
-if [ -x "$(command -v pip3)" ]; then
-  po=$(pip3 list --outdated)
+if [ -x "$(command -v /usr/local/bin/pip3)" ]; then
+  po=$(pip3 list --outdated --not-required)
   if [[ -n $po ]]; then
     echo $po \
       | tee "$(tty)" \
       | tail -n +3 \
       | cut -d ' ' -f 1 \
-      | xargs -n 1 pip3 install --upgrade --quiet
+      | xargs pip3 install --upgrade --upgrade-strategy eager --quiet
   else
     echo "No packages to update"
   fi
