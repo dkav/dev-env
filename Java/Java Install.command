@@ -2,6 +2,6 @@
 #
 # Brew install Java.
 
-brew cask install java
+brew install java
 
 read -s -k '?Press any key to continue...'

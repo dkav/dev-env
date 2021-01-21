@@ -2,4 +2,4 @@
 #
 # QLMarkdown - QuickLook generator for Markdown files.
 
-brew cask install qlmarkdown
+brew install qlmarkdown
