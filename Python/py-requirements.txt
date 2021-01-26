@@ -1,4 +1,5 @@
 # Base packages for Python development.
+pip
 
 # Environment tools
 pipdeptree
