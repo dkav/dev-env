@@ -20,7 +20,6 @@ fi
 if (($in_args[(Ie)vim])); then
   echo "\nSetup Vim ..."
   "$denv_dir/vim/vim-setup.sh"
-  "$denv_dir/vim/MacVim Install.command"
 fi
 
 # Python
@@ -40,3 +39,6 @@ if (($in_args[(Ie)node])); then
   echo "\nSetup Node Packages..."
   "$denv_dir/Node/node-packages.sh"
 fi
+
+# Create link to mac-update script
+ln -s -f $denv_dir/mac-update.sh /usr/local/bin/mac-update
