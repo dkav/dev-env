@@ -1,20 +1,14 @@
 #!/bin/zsh
 #
-# Setup macOS environment.
+# Setup dev environment.
 
 if [ "$#" -eq 0 ]; then
-  in_args=( brew vim python ruby node )
+  in_args=( vim python ruby node )
 else
   in_args=( "$@" )
 fi
 
 denv_dir=${0:A:h}
-
-# Homebrew
-if (($in_args[(Ie)brew])); then
-  echo "Setup Homebrew..."
-  "$denv_dir/Homebrew/brew-install.sh"
-fi
 
 # Vim
 if (($in_args[(Ie)vim])); then
@@ -39,6 +33,3 @@ if (($in_args[(Ie)node])); then
   echo "\nSetup Node Packages..."
   "$denv_dir/Node/node-packages.sh"
 fi
-
-# Create link to mac-update script
-ln -s -f $denv_dir/mac-update.sh /usr/local/bin/mac-update
