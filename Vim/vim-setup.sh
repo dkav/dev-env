@@ -6,6 +6,7 @@ echo >&2 "  installing vim plugins:"
 
 dotdir=$HOME/.vim
 packdir=$dotdir/pack
+sdir=${0:A:h}
 
 # Make vim packdir in .vim folder
 mkdir -p $packdir
@@ -30,7 +31,12 @@ clone_vplugin()
 }
 
 # Clone
-source ${0:a:h}/vplugins.sh
+source $sdir/vplugins.sh
 for plugin in $plugins; do
   clone_vplugin ${(P)plugin}
 done
+
+# Install Powerline font
+if [[ ${plugins[(ie)airline]} -le ${#plugins} ]] then
+  source $sdir/vim-font.sh
+fi
