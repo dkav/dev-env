@@ -6,7 +6,8 @@
 # https://gist.github.com/othiym23/4ac31155da23962afd0e
 
 if [ -x "$(command -v npm)" ]; then
-  no=($(npm --global outdated --parseable --depth=0 | sed  '/npm@/d' | cut -d: -f3,4 ))
+  no=($(npm --global outdated --parseable --depth=0 --quiet \
+    | sed  '/npm@/d' | cut -d: -f3,4 ))
   if [[ -n $no ]]; then
     for package in $no; do
       npkg="$(cut -d: -f2 <<<"$package")"
