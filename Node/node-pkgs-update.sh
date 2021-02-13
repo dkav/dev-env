@@ -1,11 +1,12 @@
 #!/bin/zsh
 #
-# Updates outdated global packages.
+# Update outdated global npm packages.
 #
 # Original source -
 # https://gist.github.com/othiym23/4ac31155da23962afd0e
 
 if [ -x "$(command -v npm)" ]; then
+  echo "Updating Node Packages..."
   no=($(npm --global outdated --parseable --depth=0 --quiet \
     | sed  '/npm@/d' | cut -d: -f3,4 ))
   if [[ -n $no ]]; then
@@ -21,5 +22,5 @@ if [ -x "$(command -v npm)" ]; then
     echo "No packages to update"
   fi
 else
-  echo "Error: Node is not installed" >&2
+  echo "Error: npm is not installed" >&2
 fi

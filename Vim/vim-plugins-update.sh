@@ -2,6 +2,8 @@
 #
 # Update Vim plugins.
 
+echo "Updating vim plugins..."
+
 packdir=$HOME/.vim/pack
 
 if [ ! -d $packdir ]; then

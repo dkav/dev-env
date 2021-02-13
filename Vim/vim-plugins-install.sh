@@ -2,7 +2,7 @@
 #
 # Install Vim plugins.
 
-echo >&2 "  installing vim plugins:"
+echo "Installing vim plugins..."
 
 dotdir=$HOME/.vim
 packdir=$dotdir/pack
@@ -38,5 +38,6 @@ done
 
 # Install Powerline font
 if [[ ${plugins[(ie)airline]} -le ${#plugins} ]] then
+  echo
   source $sdir/vim-font.sh
 fi
