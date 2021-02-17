@@ -5,6 +5,7 @@
 if [ -x "$(command -v /usr/local/opt/ruby/bin/gem)" ]; then
   echo "Install Ruby Gems..."
   gem update --system --silent 1>/dev/null
+  gem cleanup
   echo "Installing gems..."
   gem install --file Gemfile --silent
 else
