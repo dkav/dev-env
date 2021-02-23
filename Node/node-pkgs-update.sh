@@ -7,7 +7,7 @@
 
 if [ -x "$(command -v npm)" ]; then
   echo "Updating Node Packages..."
-  no=($(npm --global outdated --parseable --depth=0 --quiet | cut -d: -f3,4))
+  no=($(npm outdated --global --parseable --depth=0 --quiet | cut -d: -f3,4))
   if [[ -n $no ]]; then
     for package in $no; do
       npkg="$(cut -d: -f2 <<<"$package")"
