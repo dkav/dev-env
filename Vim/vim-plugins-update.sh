@@ -27,9 +27,11 @@ update_vplugin()
     # Get project from Github
     cd "$install_dir" || return
     git fetch --depth 1 --quiet
+    def_branch=$(git remote show origin \
+               | grep "HEAD branch" | cut -d' ' -f5)
 
-    head_hash=$(git rev-parse HEAD)
-    upstream_hash=$(git rev-parse master@{upstream})
+    head_hash=$(git rev-parse --short "$def_branch")
+    upstream_hash=$(git rev-parse --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
       echo "Updating $base_name"
