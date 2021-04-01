@@ -12,7 +12,7 @@ if [ -x "$(command -v /usr/local/opt/ruby/bin/bundle)" ]; then
   if [[  $gs_update != 0 && $? != 0  ]]; then
       echo "No gems to update"
   fi
-  bundle clean --force
+  bundle clean --force 1>/dev/null
 else
   echo "Error: bundle is not installed" >&2
 fi
