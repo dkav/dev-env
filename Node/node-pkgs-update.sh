@@ -16,6 +16,7 @@ if [ -x "$(command -v npm)" ]; then
       cver="$(cut -d@ -f2 <<<"$(cut -d: -f1 <<<"$package")")"
       pver="$(cut -d@ -f2 <<<"$npkg")"
       pkg="$(cut -d@ -f1 <<<"$npkg")"
+      echo $npkg
       echo "Updating $pkg ($cver-->$pver)"
       npm install --global --no-fund --no-progress --quiet $npkg 1>/dev/null
     done
