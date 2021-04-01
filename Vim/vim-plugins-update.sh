@@ -6,7 +6,7 @@ echo "Updating vim plugins..."
 
 packdir=$HOME/.vim/pack
 
-if [ ! -d $packdir ]; then
+if [ ! -d "$packdir" ]; then
   echo "Error: Vim not installed" >&2
   return
 fi
@@ -19,11 +19,13 @@ update_vplugin()
   # Input parameters
   local install_dir=$packdir/$1
   local gen_doc=$2
-  local base_name=$(basename $install_dir)
+  local base_name
 
-  if [ -d $install_dir/.git ]; then
+  base_name=$(basename "$install_dir")
+
+  if [ -d "$install_dir"/.git ]; then
     # Get project from Github
-    cd $install_dir
+    cd "$install_dir" || return
     git fetch --depth 1 --quiet
 
     head_hash=$(git rev-parse HEAD)
@@ -35,10 +37,10 @@ update_vplugin()
       git clean -dfx  --quiet
 
       # Generate helptags
-      if [ -z $gen_doc ] ; then
+      if [ -z "$gen_doc" ] ; then
         mvim -nNes -u NONE -c "helptags $install_dir/doc" -c q
       fi
-      let counter++
+     (( counter++ ))
     fi
   else
     echo "Warning: $base_name not installed"
@@ -46,7 +48,7 @@ update_vplugin()
 }
 
 # Update
-source ${0:a:h}/vplugins.sh
+source "${0:a:h}/vplugins.sh"
 for plugin in $plugins; do
   update_vplugin ${${(P)plugin}[2]} ${${(P)plugin}[3]}
 done
