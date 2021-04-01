@@ -34,8 +34,8 @@ update_vplugin()
     upstream_hash=$(git rev-parse --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
-      echo "Updating $base_name"
-      git reset --hard --quiet origin/master
+      echo "Updating $base_name ($head_hash --> $upstream_hash)"
+      git reset --hard --quiet origin/"$def_branch"
       git clean -dfx  --quiet
 
       # Generate helptags
