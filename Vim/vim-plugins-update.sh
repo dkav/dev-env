@@ -30,13 +30,13 @@ update_vplugin()
     def_branch=$(git remote show origin \
                | grep "HEAD branch" | cut -d' ' -f5)
 
-    head_hash=$(git rev-parse --short "$def_branch")
-    upstream_hash=$(git rev-parse --short "$def_branch@{upstream}")
+    head_hash=$(git rev-parse --quiet --verify --short "$def_branch")
+    upstream_hash=$(git rev-parse --quiet --verify --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
       echo "Updating $base_name ($head_hash --> $upstream_hash)"
       git reset --hard --quiet origin/"$def_branch"
-      git clean -dfx  --quiet
+      git clean -dfx --quiet
 
       # Generate helptags
       if [ -z "$gen_doc" ] ; then
