@@ -37,7 +37,7 @@ for plugin in $plugins; do
 done
 
 # Install Powerline font
-if [[ ${plugins[(ie)airline]} -le ${#plugins} ]] then
+if [[ ${plugins[(ie)airline]} -le ${#plugins} ]]; then
   echo
   source $sdir/vim-font.sh
 fi
