@@ -39,7 +39,7 @@ update_vplugin()
       git clean -dfx --quiet
 
       # Generate helptags
-      if [ -z "$gen_doc" ] ; then
+      if ( $gen_doc ) ; then
         mvim -nNes -u NONE -c "helptags $install_dir/doc" -c q
       fi
      (( counter++ ))
