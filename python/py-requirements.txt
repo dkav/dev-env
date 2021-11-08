@@ -3,7 +3,6 @@
 # Environment tools
 pipdeptree
 graphviz
-pipenv
 ipython
 
 # Linting tools
