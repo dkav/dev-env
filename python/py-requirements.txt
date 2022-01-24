@@ -4,8 +4,6 @@
 pip
 
 # Environment tools
-pipdeptree
-graphviz
 ipython
 
 # Linting tools
@@ -21,9 +19,3 @@ pyls
 jupyterlab
 matplotlib
 pandas
-rpy2
-
-# Web scraping
-selenium
-lxml
-beautifulsoup4
