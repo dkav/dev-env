@@ -8,7 +8,7 @@ if [ -x "$(command -v /usr/local/opt/ruby/bin/gem)" ]; then
   gem update --system --silent 1>/dev/null
   gem cleanup
   echo "Installing gems..."
-  gem install --file Gemfile --silent
+  bundle install --gemfile Gemfile --quiet
 else
   echo "Error: gem is not installed" >&2
 fi
