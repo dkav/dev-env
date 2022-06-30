@@ -4,6 +4,9 @@ source "https://rubygems.org"
 
 git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
-gem "rubocop", require: false
+# Linter
+gem 'rubocop', require: false
+
+# GitHub Pages and Jekyll Support
 gem 'github-pages', group: :jekyll_plugins
-gem "webrick"
+gem 'webrick'
