@@ -10,3 +10,6 @@ gem 'rubocop', require: false
 # GitHub Pages and Jekyll Support
 gem 'github-pages', group: :jekyll_plugins
 gem 'webrick'
+
+# Ruby on Rails
+gem 'rails'
