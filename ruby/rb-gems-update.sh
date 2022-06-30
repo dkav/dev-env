@@ -10,7 +10,7 @@ if [ -x "$(command -v /usr/local/opt/ruby/bin/bundle)" ]; then
   GEM_PATH=$(gem environment gemdir)
   export GEM_PATH
   bundle update --all | grep "Installing"
-  ga_update=$? 
+  ga_update=$?
   if [[  $gs_update != 0 && $ga_update != 0  ]]; then
       echo "No gems to update"
   fi
