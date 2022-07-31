@@ -2,7 +2,7 @@
 #
 # Update outdated base Python packages.
 
-if [ -x "$(command -v /usr/local/bin/pip3)" ]; then
+if [ -x "$(command -v /usr/local/opt/python@3.10/bin/pip3)" ]; then
   echo "Updating Python Packages..."
   rpkgs=$(sed '/#.*/d;/^$/d;s/$/\ /' ${0:a:h}/py-requirements.txt)
   plst=$(pip3 list --outdated)
