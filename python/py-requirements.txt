@@ -1,5 +1,8 @@
 # Base packages for Python development.
 
+# Install tools
+pip
+
 # Environment tools
 pipdeptree
 graphviz
