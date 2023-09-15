@@ -22,3 +22,8 @@ jupyterlab
 matplotlib
 pandas
 rpy2
+
+# Web scraping
+selenium
+lxml
+beautifulsoup4
