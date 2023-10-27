@@ -5,6 +5,7 @@
 if [ -x "$(command -v /usr/local/bin/pip3)" ]; then
   echo "Updating Python Packages..."
   export PIP_DISABLE_PIP_VERSION_CHECK=1
+  export PYTHONWARNINGS="ignore:DEPRECATION"
   rpkgs=$(sed '/#.*/d;/^$/d;s/$/\ /' ${0:a:h}/py-requirements.txt)
   plst=$(pip3 list --outdated)
   opkgs=$(echo $plst | grep -E $rpkgs)
