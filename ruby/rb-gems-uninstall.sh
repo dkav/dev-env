@@ -2,7 +2,7 @@
 #
 # Uninstall all packages for Ruby.
 
-if [ -x "$(command -v /usr/local/opt/ruby/bin/gem)" ]; then
+if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/gem)" ]; then
   echo "Uninstalling gems..."
   GEM_PATH=$(gem environment gemdir)
   export GEM_PATH
