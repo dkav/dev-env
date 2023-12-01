@@ -2,7 +2,7 @@
 #
 # Update outdated base Python packages.
 
-if [ -x "$(command -v /usr/local/bin/pip3)" ]; then
+if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pip3)" ]; then
   echo "Updating Python Packages..."
   export PIP_DISABLE_PIP_VERSION_CHECK=1
   export PYTHONWARNINGS="ignore:DEPRECATION"
