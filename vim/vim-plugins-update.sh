@@ -27,9 +27,7 @@ update_vplugin()
     # Get project from Github
     cd "$install_dir" || return
     git fetch --depth 1 --quiet
-    def_branch=$(git remote show origin \
-               | grep "HEAD branch" | cut -d' ' -f5)
-
+    def_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
     head_hash=$(git rev-parse --quiet --verify --short "$def_branch")
     upstream_hash=$(git rev-parse --quiet --verify --short "$def_branch@{upstream}")
 
