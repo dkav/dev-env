@@ -32,7 +32,8 @@ update_vplugin()
     upstream_hash=$(git rev-parse --quiet --verify --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
-      echo -e "Updating $base_name ($head_hash --> $upstream_hash)\033[0K\r"
+      printf "Updating %s (%s --> %s)\033[0K\r\n" \
+        $base_name $head_hash $upstream_hash
       git reset --hard --quiet origin/"$def_branch"
       git clean -dfx --quiet
 
@@ -43,18 +44,20 @@ update_vplugin()
      (( counter++ ))
     fi
   else
-    echo -e "Warning: $base_name not installed\033[0K\r"
+    printf "Warning: %s not installed\033[0K\r" $base_name
   fi
 }
 
 # Update
 source "${0:a:h}/vplugins.sh"
 for plugin in $plugins; do
-  echo -ne "Checking $plugin\033[0K\r"
+  printf "Checking %s\033[0K\r" $plugin
   update_vplugin ${${(P)plugin}[2]} ${${(P)plugin}[3]}
 done
 
 # Check that updates occurred
 if [[ "$counter" -eq 0 ]]; then
-  echo "No plugin updates"
+  printf "No plugin updates\033[0K\r\n"
+else
+  printf "\033[0K\r"
 fi
