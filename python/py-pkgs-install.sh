@@ -2,9 +2,17 @@
 #
 # Install base packages for Python.
 
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pip3)" ]; then
+if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
   echo "Installing Python packages..."
-  pip3 install --requirement ${0:a:h}/py-requirements.txt --disable-pip-version-check --quiet
+  
+  export USE_EMOJI=0
+
+  # Linting tools
+  pipx install ruff pylint vulture
+
+ # Jupyter
+  pipx jupyterlab
+  pipx inject jupyterlab matplotlib pandas 
 else
-  echo "Error: pip is not installed" >&2
+  echo "Error: pipx is not installed" >&2
 fi
