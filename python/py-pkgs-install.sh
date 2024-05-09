@@ -12,7 +12,7 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
 
  # Jupyter
   pipx jupyterlab
-  pipx inject jupyterlab matplotlib pandas 
+  pipx inject jupyterlab jupyterlab-vim matplotlib pandas 
 else
   echo "Error: pipx is not installed" >&2
 fi
