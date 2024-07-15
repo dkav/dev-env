@@ -5,7 +5,7 @@
 if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
   echo "Uninstalling Python packages..."
   export USE_EMOJI=0
-  pipx unininstall-all
+  pipx uninstall-all
 else
   echo "Error: pipx is not installed" >&2
 fi
