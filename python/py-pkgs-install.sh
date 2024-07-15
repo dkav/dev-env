@@ -23,9 +23,8 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
   mkdir -p $XDG_DATA_HOME/zsh/site-functions/
   ruff generate-shell-completion zsh > $XDG_DATA_HOME/zsh/site-functions/_ruff
 
- # Jupyter
-  pipx install jupyterlab
-  pipx inject jupyterlab jupyterlab-vim matplotlib pandas
+  # Jupyter
+  pipx install ipython jupyterlab
 
   # Virtual environments
   req_path=${0:a:h}
