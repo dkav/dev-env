@@ -28,6 +28,7 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
 
   # Virtual environments
   req_path=${0:a:h}
+  venv_install pydata $req_path
 else
   echo "Error: pipx is not installed" >&2
 fi

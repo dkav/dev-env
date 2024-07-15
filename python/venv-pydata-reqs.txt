@@ -1,0 +1,11 @@
+# pydata venv packages
+
+# Data analysis
+ipykernel
+numpy
+matplotlib
+pandas
+
+# Web scraping
+requests
+bs4
