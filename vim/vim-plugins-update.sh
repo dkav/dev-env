@@ -51,7 +51,7 @@ update_vplugin()
 # Update
 source "${0:a:h}/vplugins.sh"
 for plugin in $plugins; do
-  printf "\rChecking %s\033[0K" $plugin
+  printf "\rChecking %s\033[0K " $plugin
   update_vplugin ${${(P)plugin}[2]} ${${(P)plugin}[3]}
 done
 
