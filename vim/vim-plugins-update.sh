@@ -4,7 +4,7 @@
 
 echo "Updating vim plugins..."
 
-packdir=$HOME/.vim/pack
+packdir=$XDG_CONFIG_HOME/vim/pack
 
 if [ ! -d "$packdir" ]; then
   echo "Error: Vim not installed" >&2

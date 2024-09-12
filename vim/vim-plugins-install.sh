@@ -2,7 +2,7 @@
 #
 # Install Vim plugins.
 
-dotdir=$HOME/.vim
+dotdir=$XDG_CONFIG_HOME/vim
 packdir=$dotdir/pack
 sdir=${0:A:h}
 

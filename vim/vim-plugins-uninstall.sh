@@ -2,7 +2,7 @@
 #
 # Uninstall Vim plugins.
 
-packdir=$HOME/.vim/pack
+packdir=$XDG_CONFIG_HOME/vim/pack
 
 if [[ -n $1 ]]; then
   source ${0:A:h}/vplugins.sh
