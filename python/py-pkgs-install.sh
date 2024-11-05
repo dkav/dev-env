@@ -25,7 +25,7 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
   ruff generate-shell-completion zsh > $XDG_DATA_HOME/zsh/site-functions/_ruff
 
   # Jupyter
-  pipx install ipython jupyterlab
+  pipx install jupyter --include-deps
 
   # Virtual environments
   req_path=${0:a:h}
