@@ -9,6 +9,7 @@ function venv_install() {
   python3 -m venv $HOME/.local/pyvenvs/$1
   source $HOME/.local/pyvenvs/$1/bin/activate
   pip3 install --requirement $2/venv-$1-reqs.txt --quiet
+  python3 -m ipykernel install --user --name $1 --display-name "Python 3 ($1)"
   deactivate
 }
 

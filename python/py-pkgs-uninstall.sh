@@ -10,6 +10,7 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
   # Virtual environments
   pyvenvs=$HOME/.local/pyvenvs
   if [ -d $pyvenvs ]; then
+    jupyter kernelspec remove -f pydata
     rm -rf $pyvenvs
     echo "Removed Python virtual environments"
   fi
