@@ -2,6 +2,7 @@
 #
 # Install base packages for Python.
 
+# Python 3
 function venv_install() {
   # $1 - venv name; $2 - path to req file
   printf "\nInstall %s virtual environment\n" $1
@@ -14,7 +15,7 @@ function venv_install() {
 }
 
 if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
-  echo "Installing Python packages..."
+  echo "Installing Python 3 packages..."
 
   export USE_EMOJI=0
 
@@ -33,3 +34,16 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/pipx)" ]; then
 else
   echo "Error: pipx is not installed" >&2
 fi
+
+# Python 2
+if [ -x "$(command -v $HOMEBREW_PREFIX/bin/mise)" ]; then
+  echo "Installing Python 2 packages..."
+
+  mise install python@2.7.18
+  mise alias set python py2 2.7.18
+  mise exec python@2.7.18 -- python -m pip install ipykernel
+  mise exec python@2.7.18 -- python -m ipykernel install --user
+else
+  echo "Error: mise is not installed" >&2
+fi
+
