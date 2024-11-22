@@ -8,5 +8,5 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/gem)" ]; then
   export GEM_PATH
   gem uninstall --all --ignore-dependencies --executables --silent
 else
-  echo "Error:  gem is not installed" >&2
+  echo "Error: RubyGems is not installed" >&2
 fi

@@ -8,5 +8,5 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/gem)" ]; then
   echo "Installing gems..."
   bundle install --gemfile Gemfile --quiet
 else
-  echo "Error: gem is not installed" >&2
+  echo "Error: RubyGems is not installed" >&2
 fi

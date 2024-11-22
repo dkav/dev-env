@@ -14,5 +14,5 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/bundle)" ]; then
   fi
   bundle clean --force 1>/dev/null
 else
-  echo "Error: bundle is not installed" >&2
+  echo "Error: Bundler is not installed" >&2
 fi
