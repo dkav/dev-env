@@ -39,7 +39,7 @@ update_vplugin()
 
       # Generate helptags
       if ( $gen_doc ) ; then
-        mvim -nNes -u NONE -c "helptags $install_dir/doc" -c q
+        mvim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
       fi
      (( counter++ ))
     fi
