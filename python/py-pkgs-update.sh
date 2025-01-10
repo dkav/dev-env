@@ -8,7 +8,7 @@ function venv_update() {
   source $HOME/.local/pyvenvs/$1/bin/activate
   export PIP_DISABLE_PIP_VERSION_CHECK=1
   export PYTHONWARNINGS="ignore:DEPRECATION"
-  rpkgs=$(sed '/#.*/d;/^$/d;s/$/\ /' $2/venv-$1-reqs.txt)
+  rpkgs=$(sed '/#.*/d;/^$/d;s/$/\ /' $2/venv-$1-reqs.in)
   plst=$(pip3 list --outdated)
   opkgs=$(echo $plst | grep -E $rpkgs)
   if [[ -n $opkgs ]]; then
