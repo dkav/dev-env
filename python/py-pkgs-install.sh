@@ -27,6 +27,8 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
 
   echo " pylint"
   uv tool install pylint --with pylint-venv --quiet
+  echo " pyright"
+  uv tool install pyright
   echo " vulture"
   uv tool install vulture --quiet
 
