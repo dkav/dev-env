@@ -45,8 +45,9 @@ if [[ -n $1 ]]; then
 else
   echo "Installing vim plugins..."
   for plugin in $plugins; do
-    clone_vplugin ${(P)plugin}
+    clone_vplugin ${(P)plugin}&
   done
+  wait
 
   # Install Powerline font
   if [[ ${plugins[(ie)airline]} -le ${#plugins} ]]; then
