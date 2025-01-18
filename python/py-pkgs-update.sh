@@ -18,7 +18,7 @@ function venv_update() {
 if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
   echo "Updating Python Packages..."
   echo "Update Python apps"
-  uv tool upgrade --all --no-progress
+  uv tool upgrade --all --no-progress --color never
   req_path=${0:a:h}
   venv_update pydata $req_path
 else
