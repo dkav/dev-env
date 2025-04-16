@@ -4,8 +4,8 @@
 
 plugins=(airline airline_themes \
   flattened \
-  ale commentary fugitive gitgutter gutentags nerdtree surround tagbar \
-  windsurf ctrlp )
+  ale commentary ctrlp fugitive gitgutter gutentags nerdtree surround tagbar \
+  windsurf)
 
 
 # Array=("GitHub repository" "local Vim plugin folder" "Make Vim docs")
@@ -21,6 +21,7 @@ flattened=("romainl/flattened" "themes/opt/flattened" false)
 # IDE
 ale=("dense-analysis/ale" "ide/start/ale" true)
 commentary=("tpope/vim-commentary" "ide/start/commentary" true)
+ctrlp=("ctrlpvim/ctrlp.vim" "ide/start/ctrlp" true)
 fugitive=("tpope/vim-fugitive" "ide/start/fugitive" true)
 gitgutter=("airblade/vim-gitgutter" "ide/start/gitgutter" true)
 gutentags=("ludovicchabant/vim-gutentags" "ide/start/gutentags" true)
@@ -28,5 +29,3 @@ nerdtree=("scrooloose/nerdtree" "ide/start/nerdtree" true)
 surround=("tpope/vim-surround" "ide/start/surround" true)
 tagbar=("majutsushi/tagbar" "ide/start/tagbar" true)
 windsurf=("Exafunction/windsurf.vim" "ide/start/windsurf" true)
-
-ctrlp=("ctrlpvim/ctrlp.vim" "ide/opt/ctrlp" true)
