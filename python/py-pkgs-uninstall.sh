@@ -18,14 +18,3 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
 else
   echo "Error: uv is not installed" >&2
 fi
-
-
-# Python 2
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/mise)" ]; then
-  echo "Uninstalling Python 2 packages..."
-  mise alias unset python py2
-  jupyter kernelspec remove -f python2
-  mise uninstall python@2.7.18
-else
-  echo "Error: mise is not installed" >&2
-fi

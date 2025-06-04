@@ -47,16 +47,3 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
 else
   echo "Error: uv is not installed" >&2
 fi
-
-# Python 2
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/mise)" ]; then
-  printf "\nInstalling Python 2 packages...\n"
-
-  mise install python@2.7.18
-  mise alias set python py2 2.7.18
-  mise exec python@2.7.18 -- python -m pip install ipykernel
-  mise exec python@2.7.18 -- python -m ipykernel install --user
-else
-  printf "\nError: mise is not installed\n" >&2
-fi
-
