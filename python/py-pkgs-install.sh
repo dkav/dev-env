@@ -8,8 +8,6 @@ function venv_install() {
   echo " $1"
   uv venv $HOME/.local/pyvenvs/$1 --quiet
   source $HOME/.local/pyvenvs/$1/bin/activate
-  pip3 install --requirement $2/venv-$1-reqs.in --quiet
-  python3 -m ipykernel install --user --name $1 --display-name "Python 3 ($1)"
   uv pip install --requirements $2/venv-$1-reqs.in --quiet
   uv run python3 -m ipykernel install --user --name $1 \
       --display-name "Python 3 ($1)"  > /dev/null
