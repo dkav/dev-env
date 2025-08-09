@@ -1,6 +1,9 @@
-#!/bin/zsh
+#!/opt/local/bin/zsh
 #
 # Install Vim plugins.
+
+path=('/opt/local/bin' $path)
+export PATH
 
 dotdir=$XDG_CONFIG_HOME/vim
 packdir=$dotdir/pack
@@ -25,7 +28,7 @@ clone_vplugin()
 
     # Generate helptags
     if ( $gen_doc ) ; then
-      mvim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
+      vim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
     fi
   else
     echo >&2 "    $(basename $repo) already installed"
