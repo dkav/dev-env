@@ -5,7 +5,7 @@
 plugins=(airline airline_themes \
   flattened \
   ale commentary fugitive fzf gitgutter gutentags nerdtree surround \
-  tagbar windsurf)
+  tagbar)
 
 
 # Array=("GitHub repository" "local Vim plugin folder" "Make Vim docs")
@@ -28,4 +28,3 @@ gutentags=("ludovicchabant/vim-gutentags" "ide/start/gutentags" true)
 nerdtree=("scrooloose/nerdtree" "ide/start/nerdtree" true)
 surround=("tpope/vim-surround" "ide/start/surround" true)
 tagbar=("majutsushi/tagbar" "ide/start/tagbar" true)
-windsurf=("Exafunction/windsurf.vim" "ide/start/windsurf" true)
