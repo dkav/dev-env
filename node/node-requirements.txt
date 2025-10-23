@@ -7,3 +7,6 @@ http-server
 topojson-client
 topojson-server
 topojson-simplify
+
+# AI
+@github/copilot
