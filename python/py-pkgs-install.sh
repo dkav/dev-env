@@ -6,7 +6,7 @@
 function venv_install() {
   # $1 - venv name; $2 - path to req file
   echo " $1"
-  uv venv $HOME/.local/pyvenvs/$1 --quiet
+  uv venv $HOME/.local/pyvenvs/$1 --quiet --clear
   source $HOME/.local/pyvenvs/$1/bin/activate
   uv pip install --requirements $2/venv-$1-reqs.in --quiet
   uv run python3 -m ipykernel install --user --name $1 \
