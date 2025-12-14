@@ -21,7 +21,7 @@ clone_vplugin()
     echo "    $(basename $repo)"
 
     # Get project from Github
-    git clone --depth 1 --quiet git@github.com:/$repo.git $install_dir
+    git clone --depth 1 --quiet https://github.com/$repo.git $install_dir
 
     # Generate helptags
     if ( $gen_doc ) ; then
