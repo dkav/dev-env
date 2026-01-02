@@ -5,7 +5,7 @@
 if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/bundle)" ]; then
   echo "Updating Ruby Gems..."
   cd ${0:A:h} || return
-  GEM_PATH=$(gem environment gemdir)
+  GEM_PATH=$(gem environment gemdir 2>/dev/null)
   export GEM_PATH
   bundle update --all | grep "Installing"
   ga_update=$?
