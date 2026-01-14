@@ -4,7 +4,7 @@
 
 plugins=(airline airline_themes \
   flattened \
-  ale commentary fugitive fzf gitgutter gutentags nerdtree surround \
+  ale commentary fugitive gitgutter gutentags nerdtree surround \
   tagbar)
 
 
@@ -22,7 +22,6 @@ flattened=("romainl/flattened" "themes/opt/flattened" false)
 ale=("dense-analysis/ale" "ide/start/ale" true)
 commentary=("tpope/vim-commentary" "ide/start/commentary" true)
 fugitive=("tpope/vim-fugitive" "ide/start/fugitive" true)
-fzf=("junegunn/fzf.vim" "ide/start/fzf" true)
 gitgutter=("airblade/vim-gitgutter" "ide/start/gitgutter" true)
 gutentags=("ludovicchabant/vim-gutentags" "ide/start/gutentags" true)
 nerdtree=("scrooloose/nerdtree" "ide/start/nerdtree" true)
