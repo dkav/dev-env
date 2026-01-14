@@ -13,3 +13,11 @@ gem 'webrick'
 
 # Ruby on Rails
 gem 'rails'
+
+# Use installed version of rdoc
+rdoc_spec = Gem::Specification.find_all_by_name('rdoc').first
+if rdoc_spec
+  gem 'rdoc', rdoc_spec.version.to_s
+else
+  gem 'rdoc'
+end
