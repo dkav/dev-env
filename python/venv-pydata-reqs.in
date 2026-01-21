@@ -9,3 +9,4 @@ pandas
 # Web scraping
 requests
 bs4
+selenium
