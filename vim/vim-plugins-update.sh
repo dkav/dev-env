@@ -33,7 +33,7 @@ update_vplugin()
     upstream_hash=$(git rev-parse --quiet --verify --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
-      printf "\rUpdating %s (%s --> %s)\033[0K\n" \
+      printf "\rUpdating %s %s -> %s\033[0K\n" \
         $base_name $head_hash $upstream_hash
       git reset --hard --quiet origin/"$def_branch"
       git clean -dfx --quiet
