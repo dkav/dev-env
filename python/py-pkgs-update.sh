@@ -10,7 +10,6 @@ function venv_update() {
   while IFS= read -r line; do
     if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
       echo "$line"
-      break
     fi
 
     if [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
@@ -36,10 +35,7 @@ echo "Update Python apps:"
 uv tool upgrade --all --no-progress --color never 2>&1 | while IFS= read -r line; do
   if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
     echo "$line"
-    break
-  fi
-
-  if [[ "$line" =~ "Updated" ]]; then
+  elif [[ "$line" =~ "Updated" ]]; then
     echo "$line"
   elif [[ "$line" == "Nothing to upgrade" ]]; then
     echo "No app updates"
