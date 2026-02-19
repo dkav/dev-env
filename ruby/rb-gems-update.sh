@@ -2,7 +2,7 @@
 #
 # Update base packages for Ruby development.
 
-if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/bundle)" ]; then
+if (( $+commands[bundle] )); then
   echo "Updating Ruby Gems..."
   cd ${0:A:h} || return
 
