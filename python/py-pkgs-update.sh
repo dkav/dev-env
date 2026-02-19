@@ -28,7 +28,7 @@ function venv_update() {
   fi
 }
 
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
+if (( $+commands[uv])); then
   echo "Updating Python Packages..."
 
 echo "Update Python apps:"
