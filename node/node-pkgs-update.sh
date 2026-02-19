@@ -3,7 +3,7 @@
 # Update outdated global npm packages.
 #
 
-if [ -x "$(command -v npm)" ]; then
+if (( $+commands[npm] )); then
   echo "Updating Node Packages..."
   no=(${(f)"$(sed '/#.*/d;/^$/d' ${0:a:h}/node-requirements.txt \
       | xargs npm outdated --global --parseable --depth=0 --quiet)"})
