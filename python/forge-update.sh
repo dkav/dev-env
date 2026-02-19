@@ -4,7 +4,7 @@
 
 if (( $+commands[mamba] )); then
   echo "Updating Miniforge..."
-  output=$(mamba update -n base -c conda-forge -y conda mamba \
+  output=$(mamba update -n base -c conda-forge -y -q conda mamba \
     | grep -E "Upgrade: [0-9]{1,} packages")
   if [ -z "$output" ]; then
     echo "Nothing to update"
