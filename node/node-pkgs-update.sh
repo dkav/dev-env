@@ -15,7 +15,7 @@ if (( $+commands[npm] )); then
       pkg="${latest%@*}"    # @github/copilot-cli
       cver="${current##*@}" # 0.0.410
       pver="${latest##*@}"  # 0.0.411
-      echo "Updating $pkg ($cver --> $pver)"
+      echo "Updating $pkg $cver -> $pver"
       npm install --global --no-fund --no-progress --quiet "$latest" 1>/dev/null
     done
   else
