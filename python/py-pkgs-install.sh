@@ -6,22 +6,24 @@
 function venv_install() {
   # $1 - venv name; $2 - path to req file
   echo " $1"
-  uv venv $HOME/.local/pyvenvs/$1 --quiet --clear
-  source $HOME/.local/pyvenvs/$1/bin/activate
-  uv pip install --requirements $2/venv-$1-reqs.in --quiet
-  uv run python3 -m ipykernel install --user --name $1 \
-      --display-name "Python 3 ($1)"  > /dev/null
-  deactivate
+  uv venv $HOME/.local/pyvenvs/$1 --quiet --clear || return 1
+
+  uv pip install --python "$HOME/.local/pyvenvs/$1/bin/python" \
+    --quiet --requirements "$2/venv-$1-reqs.in"
+
+  "$HOME/.local/pyvenvs/$1/bin/python" -m ipykernel install \
+    --user --name $1 --display-name "Python 3 ($1)" > /dev/null
 }
 
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
+if (( $+commands[uv] )); then
   echo "Installing Python 3 packages..."
 
   # Linting tools
   echo " ruff"
   uv tool install ruff --quiet
-  mkdir -p $XDG_DATA_HOME/zsh/site-functions/
-  ruff generate-shell-completion zsh > $XDG_DATA_HOME/zsh/site-functions/_ruff
+  data_home="${XDG_DATA_HOME:-$HOME/.local/share}"
+  mkdir -p $data_home/zsh/site-functions/
+  ruff generate-shell-completion zsh > $data_home/zsh/site-functions/_ruff
 
   echo " pylint"
   uv tool install pylint --with pylint-venv --quiet
@@ -36,7 +38,7 @@ if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
 
   # Jupyter
   echo " jupyter"
-  uv tool install jupyter--core --with jupyter --quiet
+  uv tool install jupyter-core --with jupyter --quiet
 
   # Virtual environments
   printf "\nInstalling virtual environments...\n"
