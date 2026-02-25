@@ -3,22 +3,22 @@
 # Update Miniforge.
 if (( $+commands[mamba] )); then
   echo "Updating Miniforge..."
-  json=$(mamba update -n base -c conda-forge -y --json --all)
+  json=$(mamba update --name base --yes --json --use-uv --all)
   updates=$(echo "$json" | jq -r '
     if .success == false then
       "error: \(.error // "unknown error")" | halt_error(1)
     else
       .actions.UNLINK as $unlink |
       if (.actions.LINK | length) == 0 then
-        "No updates"
+        "No updates to the base environment"
       else
         .actions.LINK[] |
         . as $pkg |
         ($unlink | map(select(.name == $pkg.name)) | first) as $old |
         if $old then
-          "2_Upgraded \($pkg.name) \($old.version) -> \($pkg.version)"
+          "2_\($pkg.name) \($old.version) -> \($pkg.version)"
         else
-          "1_Installed \($pkg.name) \($pkg.version)"
+          "1_\($pkg.name) \($pkg.version)"
         end
       end
     end
@@ -28,6 +28,7 @@ if (( $+commands[mamba] )); then
     return 1
   fi
   echo "$updates"
+  mamba clean --all --yes > /dev/null 2>&1
 else
   echo "Error: mamba is not installed" >&2
 fi
