@@ -2,45 +2,43 @@
 #
 # Update outdated base Python packages.
 
-function venv_update() {
-  # $1 - venv name; $2 - path to req file
-  printf "\nUpdate %s virtual environment:\n" $1
 
-  package_updated=false
+function print_updates() {
+  # $1 - label for "no updates" message
+  local had_output=false
+  local package
+  local old_version
+
   while IFS= read -r line; do
     if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
       echo "$line"
-    fi
-
-    if [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
+      had_output=true
+    elif [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
       package="${match[1]}"
       old_version="${match[2]}"
     elif [[ "$line" =~ "^ \+ (.+)==(.+)$" ]] && [[ -n "$package" ]]; then
-      new_version="${match[2]}"
-      echo "$package $old_version->$new_version"
+      echo "${match[1]} $old_version -> ${match[2]}"
       package=""
-      package_updated=true
+      had_output=true
     fi
-  done < <(uv tool upgrade --all --no-progress --color never 2>&1)
-
-  if [[ "$package_updated" == false ]]; then
-    echo "No $1 libraries to update"
-  fi
+  done
+  [[ $had_output == false ]] && echo "No $1 updates"
 }
 
-if (( $+commands[uv])); then
+function venv_update() {
+  # $1 - venv name; $2 - path to req file
+  printf "\nUpdate %s virtual environment:\n" $1
+  print_updates "$1 package" < <(uv pip install \
+    --python "$HOME/.local/pyvenvs/$1/bin/python" \
+    --exact --upgrade --no-progress -r "$2/venv-pydata-reqs.in" 2>&1)
+}
+
+if (( $+commands[uv] )); then
   echo "Updating Python Packages..."
 
-echo "Update Python apps:"
-uv tool upgrade --all --no-progress --color never 2>&1 | while IFS= read -r line; do
-  if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
-    echo "$line"
-  elif [[ "$line" =~ "Updated" ]]; then
-    echo "$line"
-  elif [[ "$line" == "Nothing to upgrade" ]]; then
-    echo "No app updates"
-  fi
-done
+  echo "Update Python apps:"
+  print_updates "app" < <(uv tool upgrade --all \
+    --no-progress --color never 2>&1)
 
   req_path=${0:a:h}
   venv_update pydata $req_path
