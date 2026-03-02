@@ -1,8 +1,11 @@
-#!/bin/zsh
+#!/opt/local/bin/zsh
 #
 # Update Vim plugins.
 
 echo "Updating vim plugins..."
+
+GIT=/opt/local/bin/git
+export GIT_SSH_COMMAND=/opt/local/bin/ssh
 
 packdir=$XDG_CONFIG_HOME/vim/pack
 
@@ -11,7 +14,7 @@ if [ ! -d "$packdir" ]; then
   return
 fi
 
-counter_file=$(mktemp)
+counter_file=$(mktemp /tmp/counter.XXXXXX)
 echo 0 > "$counter_file"
 
 update_vplugin()
@@ -27,20 +30,21 @@ update_vplugin()
   if [ -d "$install_dir"/.git ]; then
     # Get project from Github
     cd "$install_dir" || return
-    git fetch --depth 1 --quiet
-    def_branch=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
-    head_hash=$(git rev-parse --quiet --verify --short "$def_branch")
-    upstream_hash=$(git rev-parse --quiet --verify --short "$def_branch@{upstream}")
+    $GIT fetch --depth 1 --quiet
+    def_branch=$(GIT_SSH=/opt/local/bin/ssh \
+      $GIT remote show origin | sed -n '/HEAD branch/s/.*: //p')
+    head_hash=$($GIT rev-parse --quiet --verify --short "$def_branch")
+    upstream_hash=$($GIT rev-parse --quiet --verify --short "$def_branch@{upstream}")
 
     if [ "$head_hash" != "$upstream_hash" ]; then
       printf "\r%s %s -> %s\033[0K\n" \
         $base_name $head_hash $upstream_hash
-      git reset --hard --quiet origin/"$def_branch"
-      git clean -dfx --quiet
+      $GIT reset --hard --quiet origin/"$def_branch"
+      $GIT clean -dfx --quiet
 
       # Generate helptags
       if ( $gen_doc ) ; then
-        mvim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
+        vim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
       fi
       # Increment counter in file
       echo $(($(cat "$counter_file") + 1)) > "$counter_file"
