@@ -2,7 +2,6 @@
 #
 # Update outdated base Python packages.
 
-
 function print_updates() {
   # $1 - label for "no updates" message
   local had_output=false
@@ -33,9 +32,8 @@ function venv_update() {
     --exact --upgrade --no-progress -r "$2/venv-pydata-reqs.in" 2>&1)
 }
 
+echo "Updating Python Packages..."
 if (( $+commands[uv] )); then
-  echo "Updating Python Packages..."
-
   echo "Update Python apps:"
   print_updates "app" < <(uv tool upgrade --all \
     --no-progress --color never 2>&1)

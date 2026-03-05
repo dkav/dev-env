@@ -1,8 +1,9 @@
 #!/bin/zsh
 #
 # Update Miniforge.
+
+echo "Updating Miniforge..."
 if (( $+commands[mamba] )); then
-  echo "Updating Miniforge..."
   json=$(mamba update --name base --yes --json --use-uv --all)
   updates=$(echo "$json" | jq -r '
     if .success == false then

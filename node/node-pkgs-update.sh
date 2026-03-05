@@ -3,8 +3,8 @@
 # Update outdated global npm packages.
 #
 
+echo "Updating Node Packages..."
 if (( $+commands[npm] )); then
-  echo "Updating Node Packages..."
   no=$(npm outdated --global --json --depth=0 --quiet 2>/dev/null || true)
 
   if [[ -n $no && $no != "{}" ]]; then

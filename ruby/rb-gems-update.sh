@@ -2,8 +2,8 @@
 #
 # Update base packages for Ruby development.
 
+echo "Updating Ruby Gems..."
 if (( $+commands[bundle] )); then
-  echo "Updating Ruby Gems..."
   cd ${0:A:h} || return
 
   had_output=false
