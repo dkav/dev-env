@@ -2,6 +2,8 @@
 #
 # Update outdated base Python packages.
 
+setopt extended_glob
+
 function print_updates() {
   # $1 - label for "no updates" message
   local had_output=false

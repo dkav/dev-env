@@ -2,6 +2,8 @@
 #
 # Update base packages for Ruby development.
 
+setopt extended_glob
+
 echo "Updating Ruby Gems..."
 if (( $+commands[bundle] )); then
   cd ${0:A:h} || return
