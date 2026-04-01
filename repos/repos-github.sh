@@ -1,8 +1,9 @@
-#!/bin/zsh
+#!/opt/local/bin/zsh
 
 # Fetch, pull, push and sync all GitHub repositories.
 
 set -uo pipefail
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
 REPO_DIR="$HOME/Repositories"
 TMP_DIR="/tmp/gb"
