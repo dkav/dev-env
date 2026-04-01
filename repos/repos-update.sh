@@ -3,8 +3,6 @@
 
 repos-github sync -q
 echo
-repos-github pull
-echo
-repos-github push
+repos-github fetch
 echo
 repos-push-bitbucket

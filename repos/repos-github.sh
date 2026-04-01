@@ -23,6 +23,13 @@ if [ ${#DIRS[@]} -eq 0 ]; then
   exit 1
 fi
 
+check_tracking_branch() {
+  local dir="$1"
+  local branch
+  branch=$(git -C "$dir" symbolic-ref --short HEAD 2>/dev/null) || return 1
+  git -C "$dir" rev-parse --verify "origin/$branch" &>/dev/null || return 1
+}
+
 print_output() {
   for dir in "${DIRS[@]}"; do
     out_file="$TMP_DIR/_out_$dir"
@@ -30,8 +37,7 @@ print_output() {
       output=$(cat "$out_file")
       if [[ $output != "Everything up-to-date" \
         && $output != "Already up to date." && -n "$output" ]]; then
-        echo "$dir:"
-        echo "$output"
+        printf "\n%s:\n%s\n" "$dir" "$output"
       fi
       rm -f "$out_file"
     fi
@@ -39,13 +45,15 @@ print_output() {
 }
 
 git_exec() {
-  echo "${(C)1}ing all repositories..."
+  printf "${(C)1}ing all repositories...\n"
   mkdir -p "$TMP_DIR"
   local dir
   for dir in "${DIRS[@]}"; do
-    if [[ -e "$dir/.git" ]]; then
-      git -C "$dir" --no-advice "$1" "$2" &> "$TMP_DIR/_out_$dir" &
-    fi
+    [[ -d "$dir/.git" ]] || continue
+    (
+      [[ -n "${3:-}" ]] && { "${3}" "$dir" || exit 0; }
+      git -C "$dir" "$1" $=2
+    ) &> "$TMP_DIR/_out_$dir" &
   done
   wait
   print_output
@@ -60,6 +68,7 @@ sync_forks() {
   fi
 
   local quiet=false
+  local OPTIND=1
   while getopts ":q" opt; do
     case "$opt" in
       q)
@@ -93,22 +102,11 @@ sync_forks() {
 }
 
 case "${1:-}" in
-  fetch)
-    git_exec "fetch" ""
-    ;;
-  pull)
-    git_exec "pull" "--ff-only"
-    ;;
-  push)
-    git_exec "push" "origin"
-    ;;
-  sync)
-    sync_forks "${@:2}"
-    ;;
-  *)
-    echo "Usage: ${0:t} {fetch|pull|push|sync}"
-    exit 1
-    ;;
+  fetch)  git_exec "fetch" "" ;;
+  pull)   git_exec "pull" "--ff-only" check_tracking_branch ;;
+  push)   git_exec "push" "origin" check_tracking_branch ;;
+  sync)   sync_forks "${@:2}" ;;
+  *)      echo "Usage: ${0:t} {fetch|pull|push|sync}"; exit 1 ;;
 esac
 
 exit 0

@@ -1,7 +1,6 @@
 #!/bin/zsh
 # Push all repositories to Bitbucket
 
-setopt extended_glob
 set -euo pipefail
 
 echo "Pushing all repositories to Bitbucket..."
@@ -20,7 +19,7 @@ else
   exit 1
 fi
 
-DIRS=( *~*-wt-*(/N) )
+DIRS=( *(/N) )
 if [ ${#DIRS[@]} -eq 0 ]; then
   echo "No repositories"
   exit 1
@@ -29,12 +28,11 @@ fi
 mkdir -p "$TMP_DIR"
 
 for dir in "${DIRS[@]}"; do
-  if [ -d "$dir/.git" ]; then
-    if git -C "$dir" remote | grep -q "^bitbucket$"; then
-      git -C "$dir" --no-advice push bitbucket &> "$TMP_DIR/_out_$dir" &
-    else
-      echo "  No 'bitbucket' remote found" > "$TMP_DIR/_out_$dir"
-    fi
+  [[ -d "$dir/.git" ]] || continue
+  if git -C "$dir" remote | grep -q "^bitbucket$"; then
+    git -C "$dir" --no-advice push bitbucket &> "$TMP_DIR/_out_$dir" &
+  else
+    echo "  No 'bitbucket' remote found" > "$TMP_DIR/_out_$dir"
   fi
 done
 wait

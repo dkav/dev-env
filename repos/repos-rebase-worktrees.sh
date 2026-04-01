@@ -17,7 +17,7 @@ function rb_push_br() {
   return $?
 }
 
-worktrees=("${(@f)$(ls -1 "$HOME/Repositories" | grep -- '-wt-')}")
+worktrees=( "$HOME/Repositories"/*-wt-*(/N) )
 
 if (( ${#worktrees} == 0 )); then
   echo "No worktree repos found in ~/Repositories" >&2
@@ -36,7 +36,17 @@ done
 
 wait
 
+any_output=false
 for wt in "${worktrees[@]}"; do
-  printf "\n=== %s ===\n" $wt
-  cat "$tmpdir/${wt}.log"
+  logfile="$tmpdir/${wt}.log"
+  if [[ -f "$logfile" ]]; then
+    output=$(grep -Ev "^Current branch|^Everything up-to-date|^Already up to date\.$" "$logfile")
+    if [[ -n "$output" ]]; then
+      any_output=true
+      printf "\n=== %s ===\n" "$wt"
+      echo "$output"
+    fi
+  fi
 done
+
+$any_output || echo "Everything up-to-date"
