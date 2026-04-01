@@ -2,6 +2,8 @@
 
 # List all Git stashes in every repo found anywhere under ~/Development.
 
+export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+
 DEV_DIR="$HOME/Development"
 found_repos=0
 found_stashes=0
