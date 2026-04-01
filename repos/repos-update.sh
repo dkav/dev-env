@@ -1,17 +1,5 @@
 #!/bin/zsh
 
-# Update all repositories (GitHub and Bitbucket).
+# Update all repositories (GitHub).
 
-repos-github sync -q
-
-echo
-repos-github pull
-
-echo
-repos-rebase-worktrees
-
-echo
-repos-push-ssd
-
-echo
-repos-push-bitbucket
+repos-github fetch
