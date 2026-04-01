@@ -2,6 +2,7 @@
 
 # Fetch, pull, push and sync all GitHub repositories.
 
+setopt extended_glob
 set -uo pipefail
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
@@ -51,7 +52,7 @@ git_exec() {
 
   [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-  DIRS=( "$REPO_DIR"/*(/) )
+  DIRS=( "$REPO_DIR"/*~*macports-ports*(/N) )
   if [[ ${#DIRS[@]} -eq 0 ]]; then
     echo "Error: No directories found in $REPO_DIR."
     exit 1
