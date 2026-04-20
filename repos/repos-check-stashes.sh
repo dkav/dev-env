@@ -18,8 +18,8 @@ for dir in "${DIRS[@]}"; do
   found_repos=1
   stashes=$(git -C "$dir" stash list)
   if [[ -n "$stashes" ]]; then
-    printf "\n--- ${dir:t} ---\n"
-    echo "$stashes"
+    printf "--- ${dir:t} ---\n"
+    echo "$stashes\n"
   fi
 done
 
