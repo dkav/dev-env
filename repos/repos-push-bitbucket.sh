@@ -36,15 +36,19 @@ for dir in "${DIRS[@]}"; do
 done
 wait
 
+all_up_to_date=1
+
 for dir in "${DIRS[@]}"; do
   out_file="$TMP_DIR/_out_${dir:t}"
   [[ -f "$out_file" ]] || continue
   output=$(cat "$out_file")
   if [[ $output != "Everything up-to-date" ]]; then
-    printf "\n--- ${dir:t} ---\n"
-    echo "$output"
+    all_up_to_date=0
+    printf "--- ${dir:t} ---\n"
+    echo "$output\n"
   fi
   rm "$out_file"
 done
 
 (( found_repos )) || echo "No Git repositories found in $REPO_DIR."
+(( all_up_to_date )) && echo "Everything is up-to-date."
