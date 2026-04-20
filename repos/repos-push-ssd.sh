@@ -23,8 +23,9 @@ for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
   found_repos=1
   if git -C "$dir" remote get-url ssd &>/dev/null; then
-    printf "\n--- ${dir:t} ---\n"
+    printf "--- ${dir:t} ---\n"
     git -C "$dir" push ssd --force --all
+    echo
   fi
 done
 

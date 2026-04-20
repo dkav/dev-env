@@ -46,8 +46,8 @@ if (( found_repos )); then
         "$logfile")
       if [[ -n "$output" ]]; then
         any_output=true
-        printf "\n=== %s ===\n" "${wt:t}"
-        echo "$output"
+        printf "=== %s ===\n" "${wt:t}"
+        echo "$output\n"
       fi
     fi
   done

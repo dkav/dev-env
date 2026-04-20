@@ -34,8 +34,8 @@ print_output() {
       output=$(cat "$out_file")
       if [[ $output != "Everything up-to-date" \
         && $output != "Already up to date." && -n "$output" ]]; then
-        printf "\n--- ${dir:t} ---\n"
-        echo "$output"
+        printf "--- ${dir:t} ---\n"
+        echo "$output\n"
       fi
       rm -f "$out_file"
     fi
