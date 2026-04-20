@@ -3,46 +3,47 @@
 
 set -euo pipefail
 
-echo "Pushing all repositories to Bitbucket..."
-
+REPO_DIR="$HOME/Repositories"
 TMP_DIR="/tmp/rpb"
+found_repos=0
+
 
 cleanup() {
   rm -rf "$TMP_DIR"
 }
 trap cleanup EXIT INT TERM HUP
 
-if [ -d "$HOME/Repositories/" ]; then
-  cd "$HOME/Repositories/"
-else
-  echo "No Repositories directory" >&2
-  exit 1
-fi
+[[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-DIRS=( *(/N) )
-if [ ${#DIRS[@]} -eq 0 ]; then
-  echo "No repositories"
+DIRS=( "$REPO_DIR"/*(/) )
+if [[ ${#DIRS[@]} -eq 0 ]]; then
+  echo "No directories found in $REPO_DIR."
   exit 1
 fi
 
 mkdir -p "$TMP_DIR"
 
+echo "Pushing all repositories to Bitbucket..."
+
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
+  found_repos=1
   if git -C "$dir" remote | grep -q "^bitbucket$"; then
-    git -C "$dir" --no-advice push bitbucket &> "$TMP_DIR/_out_$dir" &
+    git -C "$dir" --no-advice push bitbucket &> "$TMP_DIR/_out_${dir:t}" &
   else
-    echo "  No 'bitbucket' remote found" > "$TMP_DIR/_out_$dir"
+    echo "  No 'bitbucket' remote found" > "$TMP_DIR/_out_${dir:t}"
   fi
 done
 wait
 
 for dir in "${DIRS[@]}"; do
-  out_file="$TMP_DIR/_out_$dir"
+  out_file="$TMP_DIR/_out_${dir:t}"
   output=$(cat "$out_file")
   if [[ $output != "Everything up-to-date" ]]; then
-    echo "$dir:"
+    printf "\n--- ${dir:t} ---\n"
     echo "$output"
   fi
   rm "$out_file"
 done
+
+(( found_repos )) || echo "No Git repositories found in $REPO_DIR."

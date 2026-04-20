@@ -1,25 +1,22 @@
 #!/bin/zsh
 # Fetch, pull, push and sync all GitHub repositories
 
-set -euo pipefail
+set -uo pipefail
 
-readonly TMP_DIR="/tmp/gb"
+REPO_DIR="$HOME/Repositories"
+TMP_DIR="/tmp/gb"
+found_repos=0
 
 cleanup() {
   rm -rf "$TMP_DIR"
 }
 trap cleanup EXIT INT TERM HUP
 
-if [ -d "$HOME/Repositories/" ]; then
-  cd "$HOME/Repositories/"
-else
-  echo "No Repositories directory" >&2
-  exit 1
-fi
+[[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-DIRS=( *(/N) )
-if [ ${#DIRS[@]} -eq 0 ]; then
-  echo "No repositories"
+DIRS=( "$REPO_DIR"/*(/) )
+if [[ ${#DIRS[@]} -eq 0 ]]; then
+  echo "No directories found in $REPO_DIR."
   exit 1
 fi
 
@@ -32,12 +29,13 @@ check_tracking_branch() {
 
 print_output() {
   for dir in "${DIRS[@]}"; do
-    out_file="$TMP_DIR/_out_$dir"
+    out_file="$TMP_DIR/_out_${dir:t}"
     if [[ -f "$out_file" ]]; then
       output=$(cat "$out_file")
       if [[ $output != "Everything up-to-date" \
         && $output != "Already up to date." && -n "$output" ]]; then
-        printf "\n%s:\n%s\n" "$dir" "$output"
+        printf "\n--- ${dir:t} ---\n"
+        echo "$output"
       fi
       rm -f "$out_file"
     fi
@@ -50,13 +48,18 @@ git_exec() {
   local dir
   for dir in "${DIRS[@]}"; do
     [[ -d "$dir/.git" ]] || continue
+    found_repos=1
     (
       [[ -n "${3:-}" ]] && { "${3}" "$dir" || exit 0; }
       git -C "$dir" "$1" $=2
-    ) &> "$TMP_DIR/_out_$dir" &
+    ) &> "$TMP_DIR/_out_${dir:t}" &
   done
   wait
-  print_output
+  if (( found_repos )); then
+     print_output
+  else
+     echo "No Git repositories found in $REPO_DIR."
+  fi
 }
 
 sync_forks() {

@@ -1,52 +1,57 @@
 #!/bin/zsh
 # Rebase worktrees and push to GitHub
 
+REPO_DIR="$HOME/Repositories"
+TMP_DIR="/tmp/rrw"
+found_repos=0
+
 function rb_push_br() {
   local repo=$1
-  local logfile="$tmpdir/${repo}.log"
+  local logfile="$TMP_DIR/${repo:t}.log"
 
   {
-    if ! cd "$HOME/Repositories/$repo" 2>/dev/null; then
-      echo "Error: Could not access $repo" >&2
-      return 1
-    fi
-
-    git rebase main && git push --force
+    git -C "$repo" rebase main && git -C "$repo" push --force
   } &> "$logfile"
 
   return $?
 }
 
-worktrees=( "$HOME/Repositories"/*-wt-*(/N) )
+WORKTREES=( "$HOME/Repositories"/*-wt-*(/N) )
 
-if (( ${#worktrees} == 0 )); then
-  echo "No worktree repos found in ~/Repositories" >&2
+if (( ${#WORKTREES} == 0 )); then
+  echo "No worktree repos found in $REPO_DIR" >&2
   exit 1
 fi
 
-tmpdir="/tmp/rrw"
-mkdir -p "$tmpdir"
-trap 'rm -rf $tmpdir' EXIT
+mkdir -p "$TMP_DIR"
+trap 'rm -rf $TMP_DIR' EXIT
 
 echo "Rebasing worktrees and pushing to GitHub..."
 
-for wt in "${worktrees[@]}"; do
+for wt in "${WORKTREES[@]}"; do
+  [[ -f "$wt/.git" ]] || continue
+  found_repos=1
   rb_push_br "$wt" &
 done
 
 wait
 
-any_output=false
-for wt in "${worktrees[@]}"; do
-  logfile="$tmpdir/${wt}.log"
-  if [[ -f "$logfile" ]]; then
-    output=$(grep -Ev "^Current branch|^Everything up-to-date|^Already up to date\.$" "$logfile")
-    if [[ -n "$output" ]]; then
-      any_output=true
-      printf "\n=== %s ===\n" "$wt"
-      echo "$output"
+if (( found_repos )); then
+  any_output=false
+  for wt in "${WORKTREES[@]}"; do
+    logfile="$TMP_DIR/${wt:t}.log"
+    if [[ -f "$logfile" ]]; then
+      output=$(grep -Ev \
+        "^Current branch|^Everything up-to-date|^Already up to date\.$" \
+        "$logfile")
+      if [[ -n "$output" ]]; then
+        any_output=true
+        printf "\n=== %s ===\n" "${wt:t}"
+        echo "$output"
+      fi
     fi
-  fi
-done
-
-$any_output || echo "Everything up-to-date"
+  done
+  $any_output || echo "Everything up-to-date."
+else
+  echo "No Git repositories found in $REPO_DIR."
+fi
