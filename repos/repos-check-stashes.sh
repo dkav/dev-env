@@ -2,6 +2,7 @@
 
 REPO_DIR="$HOME/Repositories"
 found_repos=0
+found_stashes=0
 
 [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
@@ -18,9 +19,11 @@ for dir in "${DIRS[@]}"; do
   found_repos=1
   stashes=$(git -C "$dir" stash list)
   if [[ -n "$stashes" ]]; then
+    found_stashes=1
     printf "--- ${dir:t} ---\n"
     echo "$stashes\n"
   fi
 done
 
 (( found_repos )) || echo "No Git repositories found in $REPO_DIR."
+(( found_stashes )) || echo "No stashes found."
