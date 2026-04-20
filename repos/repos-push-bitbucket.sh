@@ -38,6 +38,7 @@ wait
 
 for dir in "${DIRS[@]}"; do
   out_file="$TMP_DIR/_out_${dir:t}"
+  [[ -f "$out_file" ]] || continue
   output=$(cat "$out_file")
   if [[ $output != "Everything up-to-date" ]]; then
     printf "\n--- ${dir:t} ---\n"
