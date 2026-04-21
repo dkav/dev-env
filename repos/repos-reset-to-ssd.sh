@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Reset repositories to match SSD
+
+# Reset repositories to match SSD.
 
 VOLUME_PATH="/Volumes/T5 Storage"
 REPO_DIR="$HOME/Repositories"
