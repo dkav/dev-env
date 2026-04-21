@@ -51,7 +51,7 @@ if (( found_repos )); then
       fi
     fi
   done
-  $any_output || echo "Everything up-to-date."
+  $any_output || echo "All worktress are up to date."
 else
   echo "No Git repositories found in $REPO_DIR."
 fi

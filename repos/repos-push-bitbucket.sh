@@ -51,4 +51,4 @@ for dir in "${DIRS[@]}"; do
 done
 
 (( found_repos )) || echo "No Git repositories found in $REPO_DIR."
-(( all_up_to_date )) && echo "Everything is up-to-date."
+(( all_up_to_date )) && echo "All repositories are up to date."
