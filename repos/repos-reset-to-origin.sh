@@ -37,7 +37,7 @@ update_repo() {
     # Compare local and remote hashes
     local local_hash=$(git -C "$repo" rev-parse HEAD)
     if [[ "$local_hash" == "$remote_hash" ]]; then
-        echo "  Already up to date. Skipping reset."
+        echo "  Already up to date."
         return 0
     fi
 
@@ -49,11 +49,9 @@ update_repo() {
 
     # Perform the hard reset
     echo "  Resetting to $remote_name/$branch_name..."
-    if git -C "$repo" reset --hard "$remote_name/$branch_name" >/dev/null; then
-        echo "  Successfully reset to $remote_name/$branch_name."
-    else
-        echo "  Error: Failed to reset $repo_name."
-        return 1
+    if ! git -C "$repo" reset --hard "$remote_name/$branch_name" >/dev/null 2>&1; then
+      echo "  Error: Failed to reset $repo_name."
+      return 1
     fi
 }
 
