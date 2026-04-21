@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-# In ~/Repositories list all Git stashes.
+# List all Git stashes in ~/Repositories.
 
 REPO_DIR="$HOME/Repositories"
 found_repos=0
