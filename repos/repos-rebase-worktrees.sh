@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Rebase worktrees and push to GitHub
+
+# Rebase worktrees and push to GitHub.
 
 REPO_DIR="$HOME/Repositories"
 TMP_DIR="/tmp/rrw"

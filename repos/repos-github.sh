@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Fetch, pull, push and sync all GitHub repositories
+
+# Fetch, pull, push and sync all GitHub repositories.
 
 set -uo pipefail
 

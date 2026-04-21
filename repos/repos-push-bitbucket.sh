@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Push all repositories to Bitbucket
+
+# Push all repositories to Bitbucket.
 
 set -euo pipefail
 

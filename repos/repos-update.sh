@@ -1,5 +1,6 @@
 #!/bin/zsh
-# Update all repositories (GitHub and Bitbucket)
+
+# Update all repositories (GitHub and Bitbucket).
 
 repos-github sync -q
 echo
