@@ -1,4 +1,5 @@
 #!/bin/zsh
+
 # Reset repositories to match origin on GitHub.
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
