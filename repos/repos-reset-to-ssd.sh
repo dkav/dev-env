@@ -40,7 +40,7 @@ update_repo() {
     fi
 
     # Perform the hard reset
-    echo "  Resetting to $remote_name/$branch_name..."
+    echo "  Resetting to $remote_name/$branch_name"
     if ! git -C "$repo" reset --hard "$remote_name/$branch_name" >/dev/null 2>&1; then
       echo "  Error: Failed to reset $repo_name."
       return 1
@@ -59,7 +59,7 @@ if [[ ${#DIRS[@]} -eq 0 ]]; then
   exit 1
 fi
 
-echo "Resetting repositories to match SSD..."
+echo "Resetting repositories to match SSD:"
 
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
