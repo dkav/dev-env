@@ -28,6 +28,7 @@ check_tracking_branch() {
 }
 
 print_output() {
+  local any_output=0
   for dir in "${DIRS[@]}"; do
     out_file="$TMP_DIR/_out_${dir:t}"
     if [[ -f "$out_file" ]]; then
@@ -36,10 +37,12 @@ print_output() {
         && $output != "Already up to date." && -n "$output" ]]; then
         printf "--- %s ---\n" ${dir:t}
         printf "%s\n\n" $output
+        any_output=1
       fi
       rm -f "$out_file"
     fi
   done
+  (( any_output )) || echo "All repositories are up to date."
 }
 
 git_exec() {
