@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Uninstall Vim plugins.
 
 packdir=$XDG_CONFIG_HOME/vim/pack

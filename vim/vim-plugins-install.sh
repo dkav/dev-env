@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Install Vim plugins.
 
 dotdir=$XDG_CONFIG_HOME/vim

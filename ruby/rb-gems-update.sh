@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Update base packages for Ruby development.
 
 setopt extended_glob

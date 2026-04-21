@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Uninstall all Python packages.
 
 # Python 3

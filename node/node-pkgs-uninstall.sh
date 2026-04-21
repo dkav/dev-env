@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Uninstall all global npm packages.
 
 if [ -x "$(command -v npm)" ]; then

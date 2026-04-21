@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Update outdated base Python packages.
 
 setopt extended_glob

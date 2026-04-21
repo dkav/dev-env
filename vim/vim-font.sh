@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Install Powerline font for vim-airline plugin.
 
 echo "Installing Powerline font for vim-airline"

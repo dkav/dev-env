@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Update Vim plugins.
 
 echo "Updating vim plugins..."

@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Uninstall all packages for Ruby.
 
 if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/gem)" ]; then

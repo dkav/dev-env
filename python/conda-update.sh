@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Update Miniforge.
 
 echo "Updating Miniforge..."

@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # List of Vim plugins.
 
 plugins=(airline airline_themes \

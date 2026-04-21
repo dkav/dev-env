@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Install a selection of npm packages globally.
 
 if [ -x "$(command -v npm)" ]; then

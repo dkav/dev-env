@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Install base packages for Ruby development.
 
 if [ -x "$(command -v $HOMEBREW_PREFIX/opt/ruby/bin/gem)" ]; then

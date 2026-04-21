@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Update outdated global npm packages.
 #
 

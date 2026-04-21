@@ -1,5 +1,5 @@
 #!/bin/zsh
-#
+
 # Install base packages for Python.
 
 # Python 3
