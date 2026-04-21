@@ -48,7 +48,7 @@ update_repo() {
     fi
 
     # Perform the hard reset
-    echo "  Resetting to $remote_name/$branch_name..."
+    echo "  Resetting to $remote_name/$branch_name"
     if ! git -C "$repo" reset --hard "$remote_name/$branch_name" >/dev/null 2>&1; then
       echo "  Error: Failed to reset $repo_name."
       return 1
@@ -56,7 +56,7 @@ update_repo() {
 }
 
 # --- Execution ---
-echo "Resetting repositories to match origin..."
+echo "Resetting repositories to match origin:"
 
 for repo in "$REPO_DIR"/*/; do
     repo="${repo%/}"
