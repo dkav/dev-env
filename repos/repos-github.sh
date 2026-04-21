@@ -16,7 +16,7 @@ trap cleanup EXIT INT TERM HUP
 
 DIRS=( "$REPO_DIR"/*(/) )
 if [[ ${#DIRS[@]} -eq 0 ]]; then
-  echo "No directories found in $REPO_DIR."
+  echo "Error: No directories found in $REPO_DIR."
   exit 1
 fi
 
@@ -46,7 +46,7 @@ print_output() {
 }
 
 git_exec() {
-  printf "%sing all repositories...\n" ${(C)1}
+  printf "%sing all repositories:\n" ${(C)1}
   mkdir -p "$TMP_DIR"
   local dir
   for dir in "${DIRS[@]}"; do
@@ -61,15 +61,15 @@ git_exec() {
   if (( found_repos )); then
      print_output
   else
-     echo "No Git repositories found in $REPO_DIR."
+     echo "Error: No Git repositories found in $REPO_DIR."
   fi
 }
 
 sync_forks() {
-  echo "Syncing all forked repositories on GitHub..."
+  echo "Syncing all forked repositories on GitHub:"
 
   if ! command -v gh &> /dev/null; then
-    echo "GitHub CLI (gh) not found. Please install it." >&2
+    echo "Error: GitHub CLI (gh) not found. Please install it." >&2
     exit 1
   fi
 
@@ -79,7 +79,7 @@ sync_forks() {
     case "$opt" in
       q)
         quiet=true ;;
-      \?) echo "Invalid option for sync: -$OPTARG" >&2; exit 1 ;;
+      \?) echo "Error: Invalid option for sync: -$OPTARG" >&2; exit 1 ;;
     esac
   done
 

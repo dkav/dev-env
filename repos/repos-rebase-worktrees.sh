@@ -26,7 +26,7 @@ fi
 mkdir -p "$TMP_DIR"
 trap 'rm -rf $TMP_DIR' EXIT
 
-echo "Rebasing worktrees and pushing to GitHub..."
+echo "Rebasing worktrees and pushing to GitHub:"
 
 for wt in "${WORKTREES[@]}"; do
   [[ -f "$wt/.git" ]] || continue

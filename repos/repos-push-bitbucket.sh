@@ -7,23 +7,22 @@ REPO_DIR="$HOME/Repositories"
 TMP_DIR="/tmp/rpb"
 found_repos=0
 
-
 cleanup() {
   rm -rf "$TMP_DIR"
 }
 trap cleanup EXIT INT TERM HUP
 
+echo "Pushing all repositories to Bitbucket:"
+
 [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
 DIRS=( "$REPO_DIR"/*(/) )
 if [[ ${#DIRS[@]} -eq 0 ]]; then
-  echo "No directories found in $REPO_DIR."
+  echo "Error: No directories found in $REPO_DIR."
   exit 1
 fi
 
 mkdir -p "$TMP_DIR"
-
-echo "Pushing all repositories to Bitbucket..."
 
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue

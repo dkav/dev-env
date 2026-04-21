@@ -5,6 +5,8 @@ VOLUME_PATH="/Volumes/T5 Storage"
 REPO_DIR="$HOME/Repositories"
 found_repos=0
 
+echo "Pushing repositories with ssd remote:"
+
 # Check if the drive is connected
 [[ -d "$VOLUME_PATH" ]] || \
   { echo "Error: $VOLUME_PATH is not connected."; exit 1; }
@@ -13,11 +15,9 @@ found_repos=0
 
 DIRS=( "$REPO_DIR"/*(/) )
 if [[ ${#DIRS[@]} -eq 0 ]]; then
-  echo "No directories found in $REPO_DIR."
+  echo "Error: No directories found in $REPO_DIR."
   exit 1
 fi
-
-echo "Pushing repositories with ssd remote..."
 
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
