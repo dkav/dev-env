@@ -5,7 +5,7 @@
 setopt extended_glob
 
 echo "Updating Ruby Gems..."
-if (( $+commands[bundle] )); then
+if (( $+commands[bundle] )) && [[ $commands[bundle] != /usr/bin/bundle ]]; then
   cd ${0:A:h} || return
 
   had_output=false
