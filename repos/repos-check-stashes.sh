@@ -20,8 +20,8 @@ for dir in "${DIRS[@]}"; do
   stashes=$(git -C "$dir" stash list)
   if [[ -n "$stashes" ]]; then
     found_stashes=1
-    printf "--- ${dir:t} ---\n"
-    echo "$stashes\n"
+    printf "--- %s ---\n" ${dir:t}
+    printf "%s\n\n" $stashes
   fi
 done
 

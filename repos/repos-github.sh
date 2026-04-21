@@ -34,8 +34,8 @@ print_output() {
       output=$(cat "$out_file")
       if [[ $output != "Everything up-to-date" \
         && $output != "Already up to date." && -n "$output" ]]; then
-        printf "--- ${dir:t} ---\n"
-        echo "$output\n"
+        printf "--- %s ---\n" ${dir:t}
+        printf "%s\n\n" $output
       fi
       rm -f "$out_file"
     fi
@@ -43,7 +43,7 @@ print_output() {
 }
 
 git_exec() {
-  printf "${(C)1}ing all repositories...\n"
+  printf "%sing all repositories...\n" ${(C)1}
   mkdir -p "$TMP_DIR"
   local dir
   for dir in "${DIRS[@]}"; do

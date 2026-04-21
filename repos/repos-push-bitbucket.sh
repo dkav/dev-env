@@ -44,8 +44,8 @@ for dir in "${DIRS[@]}"; do
   output=$(cat "$out_file")
   if [[ $output != "Everything up-to-date" ]]; then
     all_up_to_date=0
-    printf "--- ${dir:t} ---\n"
-    echo "$output\n"
+    printf "--- %s ---\n" ${dir:t}
+    printf "%s\n\n" $output
   fi
   rm "$out_file"
 done
