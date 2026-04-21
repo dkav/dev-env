@@ -13,14 +13,6 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM HUP
 
-[[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
-
-DIRS=( "$REPO_DIR"/*(/) )
-if [[ ${#DIRS[@]} -eq 0 ]]; then
-  echo "Error: No directories found in $REPO_DIR."
-  exit 1
-fi
-
 check_tracking_branch() {
   local dir="$1"
   local branch
@@ -48,6 +40,15 @@ print_output() {
 
 git_exec() {
   printf "%sing all repositories:\n" ${(C)1}
+
+  [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
+
+  DIRS=( "$REPO_DIR"/*(/) )
+  if [[ ${#DIRS[@]} -eq 0 ]]; then
+    echo "Error: No directories found in $REPO_DIR."
+    exit 1
+  fi
+
   mkdir -p "$TMP_DIR"
   local dir
   for dir in "${DIRS[@]}"; do
