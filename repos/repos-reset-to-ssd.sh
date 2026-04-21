@@ -11,7 +11,7 @@ update_repo() {
     local remote_name="$2"
     local branch_name="$3"
 
-    printf "--- ${repo:t} ---\n"
+    printf "--- %s ---\n" ${repo:t}
 
     # Fetch from remote
     if ! git -C "$repo" fetch "$remote_name" >/dev/null 2>&1; then
