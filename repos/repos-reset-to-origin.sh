@@ -12,7 +12,7 @@ update_repo() {
     local remote_name="$2"
     local repo_name="${repo:t}"
 
-    printf "--- $repo_name ---\n"
+    printf "--- %s ---\n" $repo_name
 
     # Get the currently checked out branch
     local branch_name=$(git -C "$repo" symbolic-ref --short HEAD 2>/dev/null)
