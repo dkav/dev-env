@@ -31,7 +31,7 @@ function venv_update() {
   printf "\nUpdate %s virtual environment:\n" $1
   print_updates "$1 package" < <(uv pip install \
     --python "$HOME/.local/pyvenvs/$1/bin/python" \
-    --exact --upgrade --no-progress -r "$2/venv-pydata-reqs.in" 2>&1)
+    --exact --upgrade --no-progress -r "$2/venv-$1-reqs.in" 2>&1)
 }
 
 echo "Updating Python Packages..."
