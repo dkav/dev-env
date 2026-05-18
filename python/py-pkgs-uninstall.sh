@@ -12,7 +12,7 @@ if [ -d $pyvenvs ]; then
   echo "Removed Python virtual environments"
 fi
 
-if [ -x "$(command -v $HOMEBREW_PREFIX/bin/uv)" ]; then
+if (( $+commands[uv] )); then
   echo "Uninstalling Python 3 packages..."
   uv tool uninstall --all --quiet
 else
