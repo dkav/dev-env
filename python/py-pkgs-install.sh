@@ -25,6 +25,8 @@ if (( $+commands[uv] )); then
   mkdir -p $data_home/zsh/site-functions/
   ruff generate-shell-completion zsh > $data_home/zsh/site-functions/_ruff
 
+  echo " ty"
+  uv tool install ty --quiet
   echo " pylint"
   uv tool install pylint --with pylint-venv --quiet
   echo " pyright"
