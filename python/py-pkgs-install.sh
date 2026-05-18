@@ -9,7 +9,7 @@ function venv_install() {
   uv venv $HOME/.local/pyvenvs/$1 --quiet --clear || return 1
 
   uv pip install --python "$HOME/.local/pyvenvs/$1/bin/python" \
-    --quiet --requirements "$2/venv-$1-reqs.in"
+    --quiet --requirements "$2/venv-$1-reqs.in" || return 1
 
   "$HOME/.local/pyvenvs/$1/bin/python" -m ipykernel install \
     --user --name $1 --display-name "Python 3 ($1)" > /dev/null
