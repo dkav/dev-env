@@ -30,7 +30,6 @@ WORKTREES=()
 for dir in "$WORKTREES_DIR"/*(N/); do
   if [[ -f "$dir/.git" ]] && grep -q "^gitdir:" "$dir/.git" 2>/dev/null; then
     WORKTREES+=("$dir")
-    rb_push_br "$dir" &
   fi
 done
 
@@ -39,6 +38,16 @@ if (( ${#WORKTREES} == 0 )); then
   exit 1
 fi
 
+MAX_PARALLEL=3
+running=0
+for wt in "${WORKTREES[@]}"; do
+  rb_push_br "$wt" &
+  (( running++ ))
+  if (( running >= MAX_PARALLEL )); then
+    wait -n 2>/dev/null || wait
+    (( running-- ))
+  fi
+done
 wait
 
 any_output=false
