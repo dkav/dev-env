@@ -9,15 +9,22 @@ function print_updates() {
   local had_output=false
   local package
   local old_version
+  local header=""
 
   while IFS= read -r line; do
     if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
       echo "$line"
       had_output=true
+    elif [[ "$line" =~ "^(Updated|Upgrading|Updating) ([^ .]+)" ]]; then
+      header="--- ${match[2]} ---"
     elif [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
       package="${match[1]}"
       old_version="${match[2]}"
     elif [[ "$line" =~ "^ \+ (.+)==(.+)$" ]] && [[ -n "$package" ]]; then
+      if [[ -n "$header" ]]; then
+        echo "$header"
+        header=""
+      fi
       echo "${match[1]} $old_version -> ${match[2]}"
       package=""
       had_output=true
