@@ -60,7 +60,11 @@ for wt in "${WORKTREES[@]}"; do
     if [[ -n "$output" ]]; then
       any_output=true
       printf "=== %s ===\n" "${wt:t}"
-      printf "%s\n\n" $output
+      if echo "$output" | grep -q "rebase.*in progress\|rebase-merge\|rebase-apply"; then
+        echo "Error: A rebase is already in progress in $wt. Please resolve manually."
+      else
+        printf "%s\n\n" $output
+      fi
     fi
   fi
 done
