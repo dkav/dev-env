@@ -15,7 +15,7 @@ function print_updates() {
     if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
       echo "$line"
       had_output=true
-    elif [[ "$line" =~ "^(Updated|Upgrading|Updating) ([^ .]+)" ]]; then
+    elif [[ "$line" =~ "^(Updated|Upgrading|Updating|Modified) ([^ .]+)" ]]; then
       header="--- ${match[2]} ---"
     elif [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
       package="${match[1]}"
