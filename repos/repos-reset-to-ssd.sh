@@ -67,7 +67,7 @@ echo "Resetting repositories to match SSD:"
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
   found_repos=1
-  update_repo "$dir" "ssd" "km"
+  update_repo "$dir" "ssd" "tk"
   echo
 done
 
