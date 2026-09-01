@@ -104,7 +104,10 @@ sync_forks() {
   mkdir -p "$TMP_DIR"
 
   for repo in "${repos[@]}"; do
-    gh repo sync "dkav/$repo" &> "$TMP_DIR/_out_$repo" &
+    (
+      branch=$(gh api "repos/dkav/$repo" --jq '.parent.default_branch') || exit 1
+      gh repo sync "dkav/$repo" -b "$branch"
+    ) &> "$TMP_DIR/_out_$repo" &
   done
   wait
 
