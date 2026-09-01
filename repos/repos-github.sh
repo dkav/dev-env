@@ -15,8 +15,8 @@ trap cleanup EXIT INT TERM HUP
 check_tracking_branch() {
   local dir="$1"
   local branch
-  branch=$(git -C "$dir" symbolic-ref --short HEAD 2>/dev/null) || return 1
-  git -C "$dir" rev-parse --verify "origin/$branch" &>/dev/null || return 1
+  branch=$(git -C "$dir" symbolic-ref --short HEAD 2> /dev/null) || return 1
+  git -C "$dir" rev-parse --verify "origin/$branch" &> /dev/null || return 1
 }
 
 print_output() {
@@ -27,8 +27,8 @@ print_output() {
     out_file="$TMP_DIR/_out_${dir:t}"
     if [[ -f "$out_file" ]]; then
       output=$(cat "$out_file")
-      if [[ $output != "Everything up-to-date" \
-        && $output != "Already up to date." && -n "$output" ]]; then
+      if [[ $output != "Everything up-to-date" &&
+        $output != "Already up to date." && -n "$output" ]]; then
         printf "--- %s ---\n" ${dir:t}
         printf "%s\n\n" $output
         any_output=1
@@ -36,7 +36,7 @@ print_output() {
       rm -f "$out_file"
     fi
   done
-  (( any_output )) || echo "All repositories are up to date."
+  ((any_output)) || echo "All repositories are up to date."
 }
 
 git_exec() {
@@ -50,7 +50,7 @@ git_exec() {
 
   [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-  DIRS=( "$REPO_DIR"/*(/) )
+  DIRS=("$REPO_DIR"/*(/))
   if [[ ${#DIRS[@]} -eq 0 ]]; then
     echo "Error: No directories found in $REPO_DIR."
     exit 1
@@ -67,10 +67,10 @@ git_exec() {
   done
   wait
 
-  if (( found_repos )); then
-     print_output "${DIRS[@]}"
+  if ((found_repos)); then
+    print_output "${DIRS[@]}"
   else
-     echo "Error: No Git repositories found in $REPO_DIR."
+    echo "Error: No Git repositories found in $REPO_DIR."
   fi
 }
 
@@ -91,12 +91,16 @@ sync_forks() {
   while getopts ":q" opt; do
     case "$opt" in
       q)
-        quiet=1 ;;
-      \?) echo "Error: Invalid option for sync: -$OPTARG" >&2; exit 1 ;;
+        quiet=1
+        ;;
+      \?)
+        echo "Error: Invalid option for sync: -$OPTARG" >&2
+        exit 1
+        ;;
     esac
   done
 
-  repos=( $(gh repo list --fork --limit 500 --json name --jq '.[].name') )
+  repos=($(gh repo list --fork --limit 500 --json name --jq '.[].name'))
   mkdir -p "$TMP_DIR"
 
   for repo in "${repos[@]}"; do
@@ -111,22 +115,25 @@ sync_forks() {
       echo "$repo:"
       cat "$out_file"
     else
-      if (( ! quiet )); then
-         echo "$repo: Synced"
+      if ((! quiet)); then
+        echo "$repo: Synced"
       fi
     fi
     rm -f "$out_file"
   done
 
- (( no_output && quiet )) && echo "All forks sync'ed."
+  ((no_output && quiet)) && echo "All forks sync'ed."
 }
 
 case "${1:-}" in
-  fetch)  git_exec "fetch" ;;
-  pull)   git_exec "pull" "--ff-only" check_tracking_branch ;;
-  push)   git_exec "push" "origin" check_tracking_branch ;;
-  sync)   sync_forks "${@:2}" ;;
-  *)      echo "Usage: ${0:t} {fetch|pull|push|sync}"; exit 1 ;;
+  fetch) git_exec "fetch" ;;
+  pull) git_exec "pull" "--ff-only" check_tracking_branch ;;
+  push) git_exec "push" "origin" check_tracking_branch ;;
+  sync) sync_forks "${@:2}" ;;
+  *)
+    echo "Usage: ${0:t} {fetch|pull|push|sync}"
+    exit 1
+    ;;
 esac
 
 exit 0
