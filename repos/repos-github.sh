@@ -12,6 +12,18 @@ cleanup() {
 }
 trap cleanup EXIT INT TERM HUP
 
+sync_repo() {
+  local repo="$1"
+  local branch
+
+  # "gh repo sync owner/repo" without -b resolves the branch from the fork's
+  # own default branch, which may not exist upstream. The REST API's repo
+  # object includes the parent's default_branch directly, so read that and
+  # pass it via -b.
+  branch=$(gh api "repos/dkav/$repo" --jq '.parent.default_branch') || return 1
+  gh repo sync "dkav/$repo" -b "$branch"
+}
+
 check_tracking_branch() {
   local dir="$1"
   local branch
