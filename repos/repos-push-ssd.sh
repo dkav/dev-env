@@ -20,14 +20,18 @@ if [[ ${#DIRS[@]} -eq 0 ]]; then
   exit 1
 fi
 
+ssd_repos=()
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir/.git" ]] || continue
   found_repos=1
-  if git -C "$dir" remote get-url ssd &>/dev/null; then
-    printf "--- %s ---\n" ${dir:t}
-    git -C "$dir" push ssd --force --all
-    echo
-  fi
+  git -C "$dir" remote get-url ssd &>/dev/null && ssd_repos+=("$dir")
+done
+
+for (( i=1; i<=${#ssd_repos[@]}; i++ )); do
+  dir=${ssd_repos[$i]}
+  printf "--- %s ---\n" ${dir:t}
+  git -C "$dir" push ssd --force --all
+  (( i < ${#ssd_repos[@]} )) && echo
 done
 
 (( found_repos )) || echo "No Git repositories found in $REPO_DIR."
