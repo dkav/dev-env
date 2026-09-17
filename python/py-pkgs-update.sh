@@ -7,29 +7,49 @@ setopt extended_glob
 function print_updates() {
   # $1 - label for "no updates" message
   local had_output=false
-  local package
-  local old_version
   local header=""
+  local -A removed=()
+  local -A added=()
+  local -a order=()
+
+  _flush_block() {
+    local pkg
+    if (( ${#order[@]} )); then
+      [[ -n "$header" ]] && echo "$header"
+      for pkg in "${order[@]}"; do
+        if [[ -n "${removed[$pkg]}" && -n "${added[$pkg]}" ]]; then
+          echo "$pkg ${removed[$pkg]} -> ${added[$pkg]}"
+        elif [[ -n "${removed[$pkg]}" ]]; then
+          echo "$pkg ${removed[$pkg]} (removed)"
+        elif [[ -n "${added[$pkg]}" ]]; then
+          echo "$pkg ${added[$pkg]} (added)"
+        fi
+        had_output=true
+      done
+    fi
+    removed=()
+    added=()
+    order=()
+  }
 
   while IFS= read -r line; do
     if [[ "$line" == *((#i)(error|failed|fatal|critical|warning))* ]]; then
       echo "$line"
       had_output=true
-    elif [[ "$line" =~ "^(Updated|Upgrading|Updating|Modified) ([^ .]+)" ]]; then
+    elif [[ "$line" =~ "^(Updated|Upgraded|Upgrading|Updating|Modified) ([^ .]+)" ]]; then
+      _flush_block
       header="--- ${match[2]} ---"
     elif [[ "$line" =~ "^ - (.+)==(.+)$" ]]; then
-      package="${match[1]}"
-      old_version="${match[2]}"
-    elif [[ "$line" =~ "^ \+ (.+)==(.+)$" ]] && [[ -n "$package" ]]; then
-      if [[ -n "$header" ]]; then
-        echo "$header"
-        header=""
-      fi
-      echo "${match[1]} $old_version -> ${match[2]}"
-      package=""
-      had_output=true
+      local pkg="${match[1]}"
+      removed[$pkg]="${match[2]}"
+      (( ${order[(Ie)$pkg]} )) || order+=("$pkg")
+    elif [[ "$line" =~ "^ \+ (.+)==(.+)$" ]]; then
+      local pkg="${match[1]}"
+      added[$pkg]="${match[2]}"
+      (( ${order[(Ie)$pkg]} )) || order+=("$pkg")
     fi
   done
+  _flush_block
   [[ $had_output == false ]] && echo "No $1 updates"
 }
 
