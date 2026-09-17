@@ -12,7 +12,7 @@ function venv_install() {
     --quiet --requirements "$2/venv-$1-reqs.in" || return 1
 }
 
-if (( $+commands[uv] )); then
+if (($+commands[uv])); then
   echo "Installing Python 3 packages..."
 
   # Linting tools
