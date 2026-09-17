@@ -10,9 +10,6 @@ function venv_install() {
 
   uv pip install --python "$HOME/.local/pyvenvs/$1/bin/python" \
     --quiet --requirements "$2/venv-$1-reqs.in" || return 1
-
-  "$HOME/.local/pyvenvs/$1/bin/python" -m ipykernel install \
-    --user --name $1 --display-name "Python 3 ($1)" > /dev/null
 }
 
 if (( $+commands[uv] )); then
@@ -45,7 +42,12 @@ if (( $+commands[uv] )); then
   # Virtual environments
   printf "\nInstalling virtual environments...\n"
   req_path=${0:a:h}
+
+  venv_install mlx $req_path
+
   venv_install pydata $req_path
+  "$HOME/.local/pyvenvs/pydata/bin/python" -m ipykernel install \
+    --user --name pydata --display-name "Python 3 (pydata)" > /dev/null
 else
   echo "Error: uv is not installed" >&2
 fi
