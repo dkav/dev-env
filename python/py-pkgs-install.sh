@@ -39,11 +39,12 @@ if (($+commands[uv])); then
   echo " jupyter"
   uv tool install jupyter-core --with jupyter --quiet
 
+  # MLX
+  uv tool install --python 3.14 mlx-lm
+
   # Virtual environments
   printf "\nInstalling virtual environments...\n"
   req_path=${0:a:h}
-
-  venv_install mlx $req_path
 
   venv_install pydata $req_path
   "$HOME/.local/pyvenvs/pydata/bin/python" -m ipykernel install \

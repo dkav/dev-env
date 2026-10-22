@@ -68,7 +68,6 @@ if (( $+commands[uv] )); then
     --no-progress --color never 2>&1)
 
   req_path=${0:a:h}
-  venv_update mlx $req_path
   venv_update pydata $req_path
 else
   echo "Error: uv is not installed" >&2
