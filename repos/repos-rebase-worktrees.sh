@@ -33,7 +33,7 @@ for dir in "$WORKTREES_DIR"/*(N/); do
   fi
 done
 
-if (( ${#WORKTREES} == 0 )); then
+if ((${#WORKTREES} == 0)); then
   echo "No Git worktrees found in $WORKTREES_DIR." >&2
   exit 1
 fi
@@ -42,10 +42,10 @@ MAX_PARALLEL=3
 running=0
 for wt in "${WORKTREES[@]}"; do
   rb_push_br "$wt" &
-  (( running++ ))
-  if (( running >= MAX_PARALLEL )); then
-    wait -n 2>/dev/null || wait
-    (( running-- ))
+  ((running++))
+  if ((running >= MAX_PARALLEL)); then
+    wait -n 2> /dev/null || wait
+    ((running--))
   fi
 done
 wait

@@ -10,7 +10,7 @@ echo "Checking for Git stashes:"
 
 [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-DIRS=( "$REPO_DIR"/*(/) )
+DIRS=("$REPO_DIR"/*(/))
 if [[ ${#DIRS[@]} -eq 0 ]]; then
   echo "Error: No directories found in $REPO_DIR."
   exit 1
@@ -27,5 +27,5 @@ for dir in "${DIRS[@]}"; do
   fi
 done
 
-(( found_repos )) || echo "No Git repositories found in $REPO_DIR."
-(( found_stashes )) || echo "No stashes found."
+((found_repos)) || echo "No Git repositories found in $REPO_DIR."
+((found_stashes)) || echo "No stashes found."

@@ -17,7 +17,7 @@ echo "Pushing all repositories to Bitbucket:"
 
 [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-DIRS=( "$REPO_DIR"/*(/) )
+DIRS=("$REPO_DIR"/*(/))
 if [[ ${#DIRS[@]} -eq 0 ]]; then
   echo "Error: No directories found in $REPO_DIR."
   exit 1
@@ -50,5 +50,5 @@ for dir in "${DIRS[@]}"; do
   rm "$out_file"
 done
 
-(( found_repos )) || echo "No Git repositories found in $REPO_DIR."
-(( all_up_to_date )) && echo "All repositories are up to date."
+((found_repos)) || echo "No Git repositories found in $REPO_DIR."
+((all_up_to_date)) && echo "All repositories are up to date."
