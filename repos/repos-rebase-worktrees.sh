@@ -2,7 +2,7 @@
 
 # Rebase worktrees and push to GitHub.
 
-WORKTREES_DIR="$HOME/Worktrees"
+WORKTREES_DIR="$HOME/Development/wktrees"
 TMP_DIR="/tmp/rrw"
 
 function rb_push_br() {
