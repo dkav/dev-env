@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-# Push all ~/Repositories repos with an ssd remote to ssd.
+# Push all ~/Development/repos repos with an ssd remote to ssd.
 
 VOLUME_PATH="/Volumes/T5 Storage"
-REPO_DIR="$HOME/Repositories"
+REPO_DIR="$HOME/Development/repos"
 found_repos=0
 
 echo "Pushing repositories with ssd remote:"
