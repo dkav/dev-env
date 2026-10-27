@@ -2,7 +2,7 @@
 
 # List all worktrees (excluding main) for each repo in the Repositories directory.
 
-repos_dir="$HOME/Repositories"
+repos_dir="$HOME/Development/repos"
 
 find "$repos_dir" -maxdepth 1 -type d -not -path "$repos_dir" \
   | while read -r repo; do

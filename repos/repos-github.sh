@@ -4,7 +4,7 @@
 
 set -uo pipefail
 
-REPO_DIR="$HOME/Repositories"
+REPO_DIR="$HOME/Development/repos"
 TMP_DIR="/tmp/gb"
 
 cleanup() {

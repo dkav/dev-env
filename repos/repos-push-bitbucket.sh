@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-REPO_DIR="$HOME/Repositories"
+REPO_DIR="$HOME/Development/repos"
 TMP_DIR="/tmp/rpb"
 found_repos=0
 
