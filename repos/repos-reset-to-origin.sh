@@ -3,7 +3,7 @@
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
 
-REPO_DIR="$HOME/Repositories"
+REPO_DIR="$HOME/Development/repos"
 EXCLUDED_REPOS=("macports-ports")
 
 # Function to safely reset a repository to match origin.
