@@ -2,7 +2,7 @@
 # Reset repositories to match SSD
 
 VOLUME_PATH="/Volumes/T5 Storage"
-REPO_DIR="$HOME/Repositories"
+REPO_DIR="$HOME/Development/repos"
 found_repos=0
 
 # Function to safely update a repository
