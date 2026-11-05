@@ -40,7 +40,7 @@ if (($+commands[uv])); then
   uv tool install jupyter-core --with jupyter --quiet
 
   # MLX
-  uv tool install --python 3.14 mlx-lm
+  uv tool install mlx-lm
 
   # Virtual environments
   printf "\nInstalling virtual environments...\n"
