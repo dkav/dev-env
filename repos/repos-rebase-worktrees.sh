@@ -2,11 +2,12 @@
 
 # Rebase worktrees and push to GitHub.
 #
-# Worktrees are discovered either directly in WORKTREES_DIR or one level down
-# in project folders, e.g.:
-#   $HOME/Development/wktrees/project1/project1-wktree
+# Only the folders listed in PROJECTS are processed. Within each, worktrees are
+# discovered either as the folder itself or one level down, e.g.:
+#   $HOME/Development/wktrees/dev-env/dev-env-wktree
 
 WORKTREES_DIR="$HOME/Development/wktrees"
+PROJECTS=(dev-env dotfiles mac-config)
 TMP_DIR="/tmp/rrw"
 
 # Path relative to WORKTREES_DIR, used for display and log names.
@@ -48,7 +49,12 @@ trap 'rm -rf $TMP_DIR' EXIT
 echo "Rebasing worktrees and pushing to GitHub:"
 
 WORKTREES=()
-for dir in "$WORKTREES_DIR"/*(N/); do
+for project in "${PROJECTS[@]}"; do
+  dir="$WORKTREES_DIR/$project"
+  if [[ ! -d "$dir" ]]; then
+    echo "Skipping missing folder: $dir" >&2
+    continue
+  fi
   if is_worktree "$dir"; then
     # Worktree sitting directly in WORKTREES_DIR.
     WORKTREES+=("$dir")
@@ -61,7 +67,7 @@ for dir in "$WORKTREES_DIR"/*(N/); do
 done
 
 if ((${#WORKTREES} == 0)); then
-  echo "No Git worktrees found in $WORKTREES_DIR." >&2
+  echo "No Git worktrees found in: ${PROJECTS[*]}." >&2
   exit 1
 fi
 
