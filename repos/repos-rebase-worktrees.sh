@@ -32,7 +32,7 @@ function rb_push_br() {
   local logfile=$(log_path "$repo")
 
   {
-    git -C "$repo" rebase main && git -C "$repo" push --force
+    git -C "$repo" rebase --update-refs main && git -C "$repo" push --force
   } &> "$logfile"
 
   return $?
