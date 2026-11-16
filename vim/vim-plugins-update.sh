@@ -12,7 +12,6 @@ if [ ! -d "$packdir" ]; then
 fi
 
 counter_file=$(mktemp)
-echo 0 > "$counter_file"
 
 update_vplugin()
 { # Function to clone Vim plugins
@@ -42,8 +41,8 @@ update_vplugin()
       if ( $gen_doc ) ; then
         mvim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
       fi
-      # Increment counter in file
-      echo $(($(cat "$counter_file") + 1)) > "$counter_file"
+      # Record one update in the counter file
+      echo x >> "$counter_file"
     fi
   else
     printf "\rWarning: %s not installed\033[0K]\n" $base_name
@@ -58,7 +57,7 @@ done
 wait
 
 # Check that updates occurred
-counter=$(cat "$counter_file")
+counter=$(wc -l < "$counter_file")
 rm "$counter_file"
 if [[ "$counter" -eq 0 ]]; then
   printf "\rNo plugin updates\033[0K\n"
