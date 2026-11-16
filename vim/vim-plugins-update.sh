@@ -13,8 +13,7 @@ fi
 
 counter_file=$(mktemp)
 
-update_vplugin()
-{ # Function to clone Vim plugins
+update_vplugin() { # Function to clone Vim plugins
 
   # Input parameters
   local install_dir=$packdir/$1
@@ -38,7 +37,7 @@ update_vplugin()
       git clean -dfx --quiet
 
       # Generate helptags
-      if ( $gen_doc ) ; then
+      if ($gen_doc); then
         mvim -nNes -u NONE -i NONE -c "helptags $install_dir/doc" -c q
       fi
       # Record one update in the counter file
