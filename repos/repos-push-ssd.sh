@@ -4,9 +4,6 @@
 
 VOLUME_PATH="/Volumes/T5 Storage"
 DEV_DIR="$HOME/Development"
-found_repos=0
-
-echo "Pushing repositories with ssd remote:"
 
 # Check if the drive is connected
 [[ -d "$VOLUME_PATH" ]] \
@@ -35,15 +32,27 @@ fi
 
 ssd_repos=()
 for dir in "${repo_dirs[@]}"; do
-  found_repos=1
   git -C "$dir" remote get-url ssd &> /dev/null && ssd_repos+=("$dir")
 done
 
-for ((i = 1; i <= ${#ssd_repos[@]}; i++)); do
-  dir=${ssd_repos[$i]}
-  printf "--- %s ---\n" "${dir#$DEV_DIR/}"
-  git -C "$dir" push ssd --force --all
-  ((i < ${#ssd_repos[@]})) && echo
-done
+if [[ ${#ssd_repos[@]} -eq 0 ]]; then
+  echo "No Git repositories with an ssd remote found in $DEV_DIR."
+  exit 0
+fi
 
-((found_repos)) || echo "No Git repositories found in $DEV_DIR."
+echo "Pushing repositories with ssd remote:"
+echo
+
+for dir in "${ssd_repos[@]}"; do
+  printf "%s\n" "--- ${dir#$DEV_DIR/} ---"
+  if ! out=$(git -C "$dir" push ssd --force --all 2>&1); then
+    echo "  Error: Push to ssd failed."
+    print -r -- "$out" | sed 's/^/    /'
+  elif [[ $out == "Everything up-to-date" ]]; then
+    echo "  Already up to date."
+  else
+    echo "  Pushed to ssd."
+    print -r -- "$out" | sed 's/^/    /'
+  fi
+  echo
+done

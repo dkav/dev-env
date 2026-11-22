@@ -47,25 +47,27 @@ check_tracking_branch() {
   git -C "$dir" rev-parse --verify "origin/$branch" &> /dev/null || return 1
 }
 
+# Print one "--- repo ---" block per repository, with its output indented.
 print_output() {
   local -a DIRS=("$@")
-  local any_output=0
-  local dir out_file output
+  local dir out_file output branch hash
 
   for dir in "${DIRS[@]}"; do
     out_file="$TMP_DIR/_out_$(repo_key "$dir")"
-    if [[ -f "$out_file" ]]; then
-      output=$(cat "$out_file")
-      if [[ $output != "Everything up-to-date" &&
-        $output != "Already up to date." && -n "$output" ]]; then
-        printf "--- %s ---\n" "$(repo_label "$dir")"
-        printf "%s\n\n" "$output"
-        any_output=1
-      fi
-      rm -f "$out_file"
+    [[ -f "$out_file" ]] || continue
+    output=$(cat "$out_file")
+    printf "%s\n" "--- $(repo_label "$dir") ---"
+    if [[ -z $output || $output == "Everything up-to-date" ||
+      $output == "Already up to date." ]]; then
+      branch=$(git -C "$dir" branch --show-current 2> /dev/null)
+      hash=$(git -C "$dir" rev-parse --short=7 HEAD 2> /dev/null)
+      echo "  Already up to date (${branch:-detached HEAD} @ $hash)."
+    else
+      print -r -- "$output" | sed 's/^/  /'
     fi
+    echo
+    rm -f "$out_file"
   done
-  ((any_output)) || echo "All repositories are up to date."
 }
 
 git_exec() {
@@ -73,8 +75,6 @@ git_exec() {
   local GIT_OPT=${2:-}
   local BRANCH=${3:-}
   local dir
-
-  printf "%sing all repositories:\n" ${(C)1}
 
   [[ ! -d "$DEV_DIR" ]] && echo "Error: $DEV_DIR not found." && exit 1
 
@@ -84,10 +84,15 @@ git_exec() {
     exit 0
   fi
 
+  printf "%sing all repositories:\n\n" ${(C)1}
+
   mkdir -p "$TMP_DIR"
   for dir in "${REPOS[@]}"; do
     (
-      [[ -n "$BRANCH" ]] && { "${BRANCH}" "$dir" || exit 0; }
+      if [[ -n "$BRANCH" ]] && ! "${BRANCH}" "$dir"; then
+        echo "Skipped: current branch has no origin counterpart."
+        exit 0
+      fi
       git -C "$dir" "$GIT_CMD" $=GIT_OPT
     ) &> "$TMP_DIR/_out_$(repo_key "$dir")" &
   done
@@ -104,6 +109,7 @@ sync_forks() {
   local repo
 
   echo "Syncing all forked repositories on GitHub:"
+  echo
 
   if ! command -v gh &> /dev/null; then
     echo "Error: GitHub CLI (gh) not found. Please install it." >&2
@@ -137,11 +143,14 @@ sync_forks() {
     out_file="$TMP_DIR/_out_$repo"
     if [[ -s "$out_file" ]]; then
       no_output=0
-      echo "$repo:"
-      cat "$out_file"
+      printf "%s\n" "--- $repo ---"
+      sed 's/^/  /' "$out_file"
+      echo
     else
       if ((! quiet)); then
-        echo "$repo: Synced"
+        printf "%s\n" "--- $repo ---"
+        echo "  Synced."
+        echo
       fi
     fi
     rm -f "$out_file"
