@@ -1,31 +1,35 @@
 #!/bin/zsh
 
-# List all Git stashes in ~/Development/repos.
+# List all Git stashes in every repo found anywhere under ~/Development.
 
-REPO_DIR="$HOME/Development/repos"
+DEV_DIR="$HOME/Development"
 found_repos=0
 found_stashes=0
 
 echo "Checking for Git stashes:"
 
-[[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
+[[ ! -d "$DEV_DIR" ]] && echo "Error: $DEV_DIR not found." && exit 1
 
-DIRS=("$REPO_DIR"/*(/))
-if [[ ${#DIRS[@]} -eq 0 ]]; then
-  echo "Error: No directories found in $REPO_DIR."
-  exit 1
-fi
+# Main repos have a .git *directory*. Linked worktrees and submodules have a
+# .git *file*, so -type d matches only main repos. Pruning .git avoids
+# descending into it, and pruning node_modules keeps the scan fast.
+repos=()
+while IFS= read -r gitdir; do
+  repos+=("${gitdir:h}")
+done < <(
+  find "$DEV_DIR" -name node_modules -type d -prune -o \
+    -name .git -type d -print -prune 2> /dev/null | sort
+)
 
-for dir in "${DIRS[@]}"; do
-  [[ -d "$dir/.git" ]] || continue
+for dir in "${repos[@]}"; do
   found_repos=1
-  stashes=$(git -C "$dir" stash list)
+  stashes=$(git -C "$dir" stash list 2> /dev/null)
   if [[ -n "$stashes" ]]; then
     found_stashes=1
-    printf "--- %s ---\n" ${dir:t}
-    printf "%s\n\n" $stashes
+    printf -- "--- %s ---\n" "${dir#$DEV_DIR/}"
+    printf "%s\n\n" "$stashes"
   fi
 done
 
-((found_repos)) || echo "No Git repositories found in $REPO_DIR."
-((found_stashes)) || echo "No stashes found."
+((found_repos)) || echo "No Git repositories found in $DEV_DIR."
+((found_repos && ! found_stashes)) && echo "No stashes found."

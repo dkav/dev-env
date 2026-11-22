@@ -4,13 +4,41 @@
 
 set -uo pipefail
 
-REPO_DIR="$HOME/Development/repos"
+DEV_DIR="$HOME/Development"
 TMP_DIR="/tmp/gb"
 
 cleanup() {
   rm -rf "$TMP_DIR"
 }
 trap cleanup EXIT INT TERM HUP
+
+# Path relative to DEV_DIR, e.g. repos/dotfiles
+repo_label() {
+  print -r -- "${1#$DEV_DIR/}"
+}
+
+# Unique, filename-safe key, e.g. repos__dotfiles
+repo_key() {
+  local rel
+  rel=$(repo_label "$1")
+  print -r -- "${rel//\//__}"
+}
+
+# Populate REPOS with every repo under DEV_DIR (any depth) that has at least
+# one remote. Skips node_modules and sandbox directories. Linked worktrees
+# have a .git file rather than a directory, so they are not matched.
+find_repos() {
+  local gitdir dir
+  REPOS=()
+  while IFS= read -r gitdir; do
+    dir=${gitdir:h}
+    [[ -n "$(git -C "$dir" remote 2> /dev/null)" ]] || continue
+    REPOS+=("$dir")
+  done < <(
+    find "$DEV_DIR" \( -name node_modules -o -name sandbox \) -type d -prune -o \
+      -type d -name .git -print -prune 2> /dev/null | sort
+  )
+}
 
 check_tracking_branch() {
   local dir="$1"
@@ -22,15 +50,16 @@ check_tracking_branch() {
 print_output() {
   local -a DIRS=("$@")
   local any_output=0
+  local dir out_file output
 
   for dir in "${DIRS[@]}"; do
-    out_file="$TMP_DIR/_out_${dir:t}"
+    out_file="$TMP_DIR/_out_$(repo_key "$dir")"
     if [[ -f "$out_file" ]]; then
       output=$(cat "$out_file")
       if [[ $output != "Everything up-to-date" &&
         $output != "Already up to date." && -n "$output" ]]; then
-        printf "--- %s ---\n" ${dir:t}
-        printf "%s\n\n" $output
+        printf "--- %s ---\n" "$(repo_label "$dir")"
+        printf "%s\n\n" "$output"
         any_output=1
       fi
       rm -f "$out_file"
@@ -43,35 +72,28 @@ git_exec() {
   local GIT_CMD=$1
   local GIT_OPT=${2:-}
   local BRANCH=${3:-}
-  local found_repos=0
   local dir
 
   printf "%sing all repositories:\n" ${(C)1}
 
-  [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
+  [[ ! -d "$DEV_DIR" ]] && echo "Error: $DEV_DIR not found." && exit 1
 
-  DIRS=("$REPO_DIR"/*(/))
-  if [[ ${#DIRS[@]} -eq 0 ]]; then
-    echo "Error: No directories found in $REPO_DIR."
-    exit 1
+  find_repos
+  if [[ ${#REPOS[@]} -eq 0 ]]; then
+    echo "No Git repositories with a remote found in $DEV_DIR."
+    exit 0
   fi
 
   mkdir -p "$TMP_DIR"
-  for dir in "${DIRS[@]}"; do
-    [[ -d "$dir/.git" ]] || continue
-    found_repos=1
+  for dir in "${REPOS[@]}"; do
     (
       [[ -n "$BRANCH" ]] && { "${BRANCH}" "$dir" || exit 0; }
       git -C "$dir" "$GIT_CMD" $=GIT_OPT
-    ) &> "$TMP_DIR/_out_${dir:t}" &
+    ) &> "$TMP_DIR/_out_$(repo_key "$dir")" &
   done
   wait
 
-  if ((found_repos)); then
-    print_output "${DIRS[@]}"
-  else
-    echo "Error: No Git repositories found in $REPO_DIR."
-  fi
+  print_output "${REPOS[@]}"
 }
 
 sync_forks() {

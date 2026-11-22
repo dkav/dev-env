@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-REPO_DIR="$HOME/Development/repos"
+REPO_DIR="$HOME/Development"
 TMP_DIR="/tmp/rpb"
 found_repos=0
 
@@ -17,7 +17,8 @@ echo "Pushing all repositories to Bitbucket:"
 
 [[ ! -d "$REPO_DIR" ]] && echo "Error: $REPO_DIR not found." && exit 1
 
-DIRS=("$REPO_DIR"/*(/))
+DIRS=("$REPO_DIR"/**/.git(/N:h))
+DIRS=(${DIRS:#"$REPO_DIR"/(*/|)sandbox(|/*)})
 if [[ ${#DIRS[@]} -eq 0 ]]; then
   echo "Error: No directories found in $REPO_DIR."
   exit 1
