@@ -8,7 +8,7 @@ echo
 repos-github pull
 
 echo
-host-wktrees-rebase
+repos-rebase-wktrees
 
 echo
 repos-push-ssd
