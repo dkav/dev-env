@@ -2,9 +2,11 @@
 
 # Rebase stacked worktree branches onto main and push to GitHub.
 #
-# Each worktree lives one level down inside its project folder:
-#   $HOME/Development/wktrees/<project>/<worktree>
-# Every project has the same stacks (bottom-up), one worktree per branch:
+# Each project lives in its own folder under ~/Development/config:
+#   $HOME/Development/config/<project>/<project>-repo        main repo
+#   $HOME/Development/config/<project>/wktrees/<worktree>    linked worktrees
+# Worktrees are matched by the branch they have checked out, not by folder
+# name. Every project has the same stacks (bottom-up), one worktree per branch:
 #   main -> km -> tk
 #   main -> chaco -> sawtooth
 #
@@ -15,7 +17,7 @@
 # commit, so a run with no changes only makes one fetch per project.
 # Exit status is non-zero if any stack failed or was skipped.
 
-WORKTREES_DIR="$HOME/Development/wktrees"
+CONFIG_DIR="$HOME/Development/config"
 PROJECTS=(dev-env dotfiles mac-config)
 STACKS=("km tk" "chaco sawtooth")
 
@@ -89,33 +91,33 @@ function rebase_stack() {
 
 # Fetch origin and fast-forward local main if it is behind. Local commits ahead
 # of origin are left alone for the push step. Fails if main has diverged.
-# Takes any worktree of the repo; the fast-forward is done in the checkout that
+# Takes the project's main repo; the fast-forward is done in the checkout that
 # has main checked out (if any) so its working tree stays in sync.
 function sync_main() {
-  local any_wt=$1 main_wt out
+  local repo=$1 main_wt out
 
   # Fetch every branch (one round trip) so origin/main and the origin/* refs of
   # the stack branches are fresh; later steps skip pushes by comparing to them.
-  out=$(git -C "$any_wt" fetch origin 2>&1) || {
+  out=$(git -C "$repo" fetch origin 2>&1) || {
     echo "$out" >&2
     return 1
   }
 
   # Equal to or ahead of origin/main: nothing to fast-forward.
-  git -C "$any_wt" merge-base --is-ancestor origin/main main && return 0
+  git -C "$repo" merge-base --is-ancestor origin/main main && return 0
 
-  if ! git -C "$any_wt" merge-base --is-ancestor main origin/main; then
+  if ! git -C "$repo" merge-base --is-ancestor main origin/main; then
     echo "  main has diverged from origin/main" >&2
     return 1
   fi
 
-  main_wt=$(git -C "$any_wt" worktree list --porcelain \
+  main_wt=$(git -C "$repo" worktree list --porcelain \
     | awk '/^worktree /{p=substr($0,10)} /^branch refs\/heads\/main$/{print p; exit}')
 
   if [[ -n $main_wt ]]; then
     out=$(git -C "$main_wt" merge --ff-only origin/main 2>&1)
   else
-    out=$(git -C "$any_wt" branch -f main origin/main 2>&1)
+    out=$(git -C "$repo" branch -f main origin/main 2>&1)
   fi || {
     echo "$out" >&2
     return 1
@@ -123,8 +125,8 @@ function sync_main() {
   echo "  main: fast-forwarded"
 }
 
-if [[ ! -d "$WORKTREES_DIR" ]]; then
-  echo "Worktrees directory not found: $WORKTREES_DIR" >&2
+if [[ ! -d "$CONFIG_DIR" ]]; then
+  echo "Config directory not found: $CONFIG_DIR" >&2
   exit 1
 fi
 
@@ -134,8 +136,17 @@ failed=0
 for project in "${PROJECTS[@]}"; do
   echo "== $project =="
 
-  if [[ ! -d "$WORKTREES_DIR/$project" ]]; then
-    echo "  folder not found: $WORKTREES_DIR/$project" >&2
+  repo="$CONFIG_DIR/$project/$project-repo"
+  wt_dir="$CONFIG_DIR/$project/wktrees"
+
+  if [[ ! -d "$repo/.git" ]]; then
+    echo "  main repo not found: $repo" >&2
+    failed=1
+    continue
+  fi
+
+  if [[ ! -d "$wt_dir" ]]; then
+    echo "  folder not found: $wt_dir" >&2
     failed=1
     continue
   fi
@@ -144,35 +155,31 @@ for project in "${PROJECTS[@]}"; do
   # worktree (no clones); non-git entries are ignored. Git allows a branch in
   # only one worktree, so each stack branch maps to at most one path.
   by_branch=()
-  any_wt=""
-  for wt in "$WORKTREES_DIR/$project"/*(N/); do
+  for wt in "$wt_dir"/*(N/); do
     b=$(git -C "$wt" branch --show-current 2> /dev/null)
     [[ -n $b ]] || continue
     by_branch[$b]=$wt
-    any_wt=$wt
   done
 
   # Bring local main up to date with origin, then push any local main commits
   # so the rebased branches aren't published on top of commits GitHub doesn't
-  # have. Plain push, never forced; any worktree of the repo can push the main
-  # ref. If either step fails, skip this project's stacks.
-  if [[ -n $any_wt ]]; then
-    sync_main "$any_wt" || {
-      echo "  main: sync FAILED, skipping project" >&2
+  # have. Plain push, never forced. If either step fails, skip this project's
+  # stacks.
+  sync_main "$repo" || {
+    echo "  main: sync FAILED, skipping project" >&2
+    failed=1
+    continue
+  }
+  if [[ $(git -C "$repo" rev-parse main) == $(git -C "$repo" rev-parse -q --verify origin/main) ]]; then
+    echo "  main: up to date"
+  else
+    out=$(git -C "$repo" push origin main 2>&1) || {
+      echo "  main: push FAILED, skipping project" >&2
+      echo "$out" >&2
       failed=1
       continue
     }
-    if [[ $(git -C "$any_wt" rev-parse main) == $(git -C "$any_wt" rev-parse -q --verify origin/main) ]]; then
-      echo "  main: up to date"
-    else
-      out=$(git -C "$any_wt" push origin main 2>&1) || {
-        echo "  main: push FAILED, skipping project" >&2
-        echo "$out" >&2
-        failed=1
-        continue
-      }
-      echo "  main: pushed"
-    fi
+    echo "  main: pushed"
   fi
 
   for stack in "${STACKS[@]}"; do
